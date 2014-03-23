@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% include "include/custom_meta.html" %}
+    <title>{% block title %}{% endblock %}</title>
+    {% block css %}
+        {% include "include/stylesheets.html" %}
+    {% endblock %}
+  </head>
+
+  <body> 
+  <div id="wrap">
+    {% block navbar %}
+        {% include "include/navbar.html" %}
+    {% endblock %}
+    {% block content %}
+        <div id="container">
+        {% block sidebar %}
+        {% endblock %}
+        <div id='main_content'>
+          {% block main %}Content goes here{% endblock %}
+        </div>
+      </div>
+    {% endblock %}
+    <div id="footer">
+      {% block footer %}
+        {% include "include/footer.html" %}
+      {% endblock %}
+    </div>
+    {% block js %}
+      {% include "include/scripts.html" %}
+    {% endblock %}
+    <div id="modal_wrapper" />
+  </body>
+</html>

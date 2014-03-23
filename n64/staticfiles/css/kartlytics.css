@@ -1,0 +1,91 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+
+html,
+body {
+  height: 100%;
+  /* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto;
+  /* Negative indent footer by its height */
+  margin: 0 auto -60px;
+  /* Pad bottom by footer height */
+  padding: 0 0 60px;
+}
+
+/* Set the fixed height of the footer here */
+#footer {
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+
+
+
+/* Custom MOC Styling
+-------------------------------------------------- */
+body{ font-family: 'Share Tech', sans-serif; }
+.navbar-default { background-color: #0c2a3e; min-height: 100px;}
+.navbar-default .navbar-brand, .navbar-default .navbar-nav>li>a { color: #ffffff; }
+.navbar-default .navbar-brand:hover { color: #cecece; }
+.navbar-default .navbar-nav>li>a:hover { color: #555555; background-color: #cecece;}
+.navbar-default .navbar-nav>.active>a { background-color: #ffffff; }
+.navbar-default .navbar-nav>.active>a:hover { background-color: #cecece; }
+.navbar-default .navbar-right { margin-top: 20px; }
+
+.navbar-default .navbar-collapse { border: none; box-shadow: none; }
+.navbar-toggle { background-color: #ffffff; margin-top: 30px;}
+.navbar-toggle:hover { background-color: #ffffff; }
+
+.logoText { margin-top: 4px; }
+
+/* For Simile/Exhibit images */
+img.thumb {
+  max-height:100px;
+  max-width:100px;
+}
+div.serviceThumbnail {
+  float:      left;
+  width:      13em;
+  height:     12em;
+//  border:     1px solid #BCB79E;
+//  background: #F0FFF0;
+  padding:    1em;
+  margin:     0.5em;
+  text-align: center;
+  vertical-align: middle;
+  display: inline-block;
+}
+div.boxed {
+	border: 1px solid black;
+	text-align: center;
+}
+
+
+#wrap > .container {
+  padding: 120px 15px 0;
+}
+.container .credit {
+  margin: 20px 0;
+}
+
+#footer > .container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.sidebar { }
+.machine { margin-top: 40px; clear:both;}
+.btn-deploy { margin-top: 70px; }
+
+/* Responsive */
+@media (max-width: 996px) {
+.btn-deploy { margin-top: 50px; }
+}
+@media (max-width: 767px) {
+.btn-deploy { margin-top: 0px; }
+}
