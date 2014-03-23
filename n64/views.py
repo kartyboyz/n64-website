@@ -14,8 +14,16 @@ def query(request):
             ##do stuff with data
     else:
         form = QueryForm()
-    return render(request, 'query.html', {'form': form}
+    return render(request, 'query.html', {'form': form})
 
+def watch(request):
+    return render(request, 'base.html')
+
+def upload(request):
+    return render(request, 'base.html')
+
+def login(request):
+    return render(request, 'base.html')
 
 def current_datetime(request):
     now = datetime.datetime.now()
