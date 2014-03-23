@@ -1,54 +1,31 @@
 {% extends "base.html" %}
 
+{% block title %}Query{% endblock %}
+
 {% block content %}
     <div class="container">   
-                  <div class="row">
-                                <div class="col-md-3 sidebar">
-                                        <div class="panel panel-default" style="display:none;">
-                                          <div class="panel-heading">
-                                                <h3 class="panel-title">Marketplace</h3>
-                                          </div>    
-                                          <div class="panel-body">
-                                          <a href="market.php" class="btn btn-primary" role="button"><i class="fa fa-shopping-cart"></i> View Market</a>
-                                          </div>
-                                        </div>
-                                </div>      
-                                <div class="col-md-9 content">
-                                        <h2><i class="fa fa-cloud"></i> My Cloud</h2>
-                                            
-                                        <?php if(isset($_SESSION['vm']) && $_SESSION['vm'] == 'matlab') { ?>                                    
-                                        <div class="item col-md-4">
-                                        <div class="panel panel-default">
-                                          <div class="panel-heading">
-                                                <h3 class="panel-title"><?php echo (isset($_SESSION['vmname']) && $_SESSION['vmname'] != '' ? $_SESSION['vmname'] : 'Matlab Compute') ;?></h3>
-                                          </div>
-                                          <div class="panel-body">
-                                          <p>Type: Matlab
-                                          <br />
-                                          IP: XXX.XXX.XXX.XXX
-                                          <br />
-                                          Storage: On
-                                          </p>
-
-                                          <p align="center">
-                                            <a href="mycloud.php?state=on" ><i class="fa fa-play fa-5x"></i><br />Run Machine</a>
-                                          </p>
-                                          </div>
-
-                                          <div class="panel-footer" align="center">
-                                                <p align="center">
-                                                <button class="btn btn-primary" data-toggle="modal" data-target="#matlabSettingsModal"><i class="fa fa-gears"></i> Manage</button>
-                                                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash-o"></i> Delete</button>                              
-                                                </p></div>
-                                        </div>
-                                        </div>
-                                        <!--?php } else { ?>
-                                        <div class="alert alert-warning alert-dismissable">
-                                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                          <strong>Wait a minute!</strong> You don't have any clouds yet. Visit the <a href="market.php">marketplace</a> to deploy a cloud.
-                                        </div>-->
-                                </div>
-                        </div>
+        <div class="row">
+            <div class="col-md-3 sidebar">
+                <div class="panel panel-default" style="display:none;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Marketplace</h3>
+                    </div>    
+                    <div class="panel-body">
+                       <a href="/query" class="btn btn-primary" role="button"><i class="fa fa-shopping-cart"></i> View Market</a>
+                    </div>
                 </div>
+            </div>      
+            <div class="col-md-9 content">
+                <h2><i class="fa fa-cloud"></i> My Cloud</h2>
+                    <form action="" method="post">
+                        <table>
+                            {{ form.as_table }}
+                        </table>
+                        {% csrf_token %}
+                        <input type="submit" value="Submit">
+                    </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 

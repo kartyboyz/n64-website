@@ -1,12 +1,21 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 import datetime
+from n64.forms import QueryForm
 
 def home(request):
     return render(request, 'base.html')
 
 def query(request):
-    return render(request, 'query.html')
+    if request.method == 'post':
+        form = QueryForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            ##do stuff with data
+    else:
+        form = QueryForm()
+    return render(request, 'query.html', {'form': form}
+
 
 def current_datetime(request):
     now = datetime.datetime.now()

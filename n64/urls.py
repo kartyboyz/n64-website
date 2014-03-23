@@ -1,13 +1,13 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
-from n64.views import home, query, current_datetime, hours_ahead
-
+from n64.forms import QueryForm
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
-urlpatterns = patterns('',url(r'^$', home), 
+urlpatterns = patterns('n64.views',
+              url(r'^$', home), 
 			  url(r'^query/$', query),	
 			  url(r'^time/$', current_datetime),	
 			  url(r'^time/(\d{1,2})/$', hours_ahead),	
