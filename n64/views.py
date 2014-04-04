@@ -17,10 +17,10 @@ def query(request):
     return render(request, 'query.html', {'form': form})
 
 def watch(request):
-    return render(request, 'base.html')
+    return render(request, 'watch.html')
 
 def upload(request):
-    return render(request, 'base.html')
+    return render(request, 'upload.html')
 
 def login(request):
     return render(request, 'base.html')
