@@ -21,9 +21,14 @@
                     </div>
                 </div>
             </div>      
+            {% if result %}
             <div class="col-md-9 content">
                 <h2><i class="fa fa-cloud"></i> Results:</h2>
+                <table>
+                    {{ form.as_table }}
+                </table>
             </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
