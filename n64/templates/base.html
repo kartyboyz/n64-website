@@ -9,18 +9,23 @@
   </head>
 
   <body> 
-  <div id="wrap">
+    <div id="wrap">
     {% block navbar %}
         {% include "include/navbar.html" %}
     {% endblock %}
     {% block content %}
         <div id="container">
-        {% block sidebar %}
-        {% endblock %}
-        <div id='main_content'>
-          {% block main %}Content goes here{% endblock %}
+            {% block sidebar %}
+            {% endblock %}
+            <div class="row">
+                <div class="col-md-9">
+                {% block main %}
+                Content goes here
+                {% endblock %}
+                </div>
+            </div>
         </div>
-      </div>
+    </div>
     {% endblock %}
     <div id="footer">
       {% block footer %}

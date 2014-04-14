@@ -8,16 +8,11 @@
             <div class="col-md-3 sidebar">
                 <div class="panel panel-default" >
                     <div class="panel-heading">
-                        <h3 class="panel-title">Please enter query!</h3>
+                        <h3 class="panel-title">Query language:</h3>
                     </div>    
                     <div class="panel-body">
-                        <form action="" method="post">
-                            <table>
-                                {{ form.as_table }}
-                            </table>
-                            {% csrf_token %}
-                            <input type="submit" value="Submit">
-                        </form>
+                        <p>Elements:</br>
+                        <p>Conditions:</br>
                     </div>
                 </div>
             </div>      
@@ -28,9 +23,15 @@
                     {{ form.as_table }}
                 </table>
             </div>
+            <div class="col-md-9 content">
+                <h2><i class="fa fa-cloud"></i> Please enter another query: </h2>
+                <table>
+                    {{ form.as_table }}
+                </table>
+            </div>
             {% else %}
             <div class="col-md-9 content">
-                <h2><i class="fa fa-cloud"></i> Results:</h2>
+                <h2><i class="fa fa-cloud"></i> Please enter query: </h2>
                 <table>
                     {{ form.as_table }}
                 </table>
