@@ -17,8 +17,9 @@ def query(request):
             ##new query post to db
             query_string = cd['query']
             query = json.dumps({'query': query_string})
-            requests.post('http://n64storageflask-env.elasticbeanstalk.com/sessions',
+            response = requests.post('http://n64storageflask-env.elasticbeanstalk.com/sessions',
                     data=query_string, headers={'Content-Type': 'application/json'})
+            result = json.loads(response.text)
         return render(request, 'query.html', {'form': form, 'result': result})
 
     else:
@@ -26,18 +27,25 @@ def query(request):
     return render(request, 'query.html', {'form': form})
 
 def watch(request):
+    form = WatchForm(request.GET)
+    ##ask what videos we have access to
+    user_info = json.dumps({'user': user.username})
+    response = requests.post('http://n64storageflask-env.elasticbeanstalk.com/sessions',
+            data=user_info, headers={'Content-Type': 'application/json'})
+    video_list = json.loads(response.text)
+
     if request.method == 'get':
-        form = WatchForm(request.GET)
         if form.is_valid():
+            ##ask for your video url 
             cd = form.cleaned_data
-            ##ask for your video  
-            ##video_num = cd['video']
-            ##video = json.dumps({'video': video_num})
-            ##requests.post('http://n64storageflask-env.elasticbeanstalk.com/sessions',
-            ##        data=video, headers={'Content-Type': 'application/json'})
-            ##return render(request, 'watch.html', {'form': form, 'video': video})
-    else:
-        return render(request, 'watch.html', {'form': form})
+            video_num = cd['video']
+            video = json.dumps({'video': video_num})
+            response = requests.post('http://n64storageflask-env.elasticbeanstalk.com/sessions',
+                    data=video, headers={'Content-Type': 'application/json'})
+            result = json.loads(response.text)
+            return render(request, 'watch.html', {'form': form, 'video_list': video_list, 'video': result})
+
+    return render(request, 'watch.html', {'form': form, 'video_list': video_list})
 
 def upload(request):
     if request.method == 'POST':

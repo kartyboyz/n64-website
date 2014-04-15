@@ -9,7 +9,8 @@ from django.contrib.auth.views import login, logout
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-                          url(r'^$', home), 
+              url(r'^$', home), 
+              url(r'^home/$', home), 
 			  url(r'^query/$', query),	
 			  url(r'^watch/$', watch),	
 			  url(r'^upload/$', upload),	

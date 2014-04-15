@@ -5,6 +5,4 @@ class QueryForm(forms.Form):
     Conditions = forms.CharField(required=False)
 
 class VideoForm(forms.Form):
-    event = forms.CharField(required=False)
-    race = forms.CharField(required=False)
-    player = forms.CharField(required=False)
+    videoNum = forms.CharField(required=False)
