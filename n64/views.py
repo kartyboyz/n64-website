@@ -42,7 +42,7 @@ def watch(request):
             ##ask for your video url 
             cd = form.cleaned_data
             video_num = cd['videoNum']
-            video_url = race_url[video_num]
+            video_url = race_urls[video_num]
             return render(request, 'watch.html', {'form': form, 'video_list': race_urls, 'video_url': video_url})
 
     form = WatchForm()
