@@ -4,7 +4,7 @@ import base64, json, urllib, hmac, time, hashlib
 import uuid, os, datetime
 import requests
 
-from n64.forms import QueryForm, WatchForm, VideoForm
+from n64.forms import QueryForm, WatchForm 
 
 def home(request):
     return render(request, 'base.html')
