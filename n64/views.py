@@ -43,11 +43,11 @@ def watch(request):
             cd = form.cleaned_data
             video_num = cd['videoNum']
             video = json.dumps({'video': video_num})
-            response = requests.get("http://n64storageflask-env.elasticbeanstalk.com/users/%s/races" % request.user.username,
-                    data=video, headers={'Content-Type': 'application/json'})
-            result = json.loads(response.text)
+            response = requests.get("http://n64storageflask-env.elasticbeanstalk.com/users/%s/races" % 'mgabed')
+            result = response.json()
             return render(request, 'watch.html', {'form': form, 'video_list': race_url_container, 'video': result})
 
+    form = WatchForm()
     return render(request, 'watch.html', {'form': form, 'video_list': race_url_container})
 
 def upload(request):
