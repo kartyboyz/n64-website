@@ -9,12 +9,12 @@
   </head>
 
   <body> 
-    <div id="wrap">
+    <div class="wrap">
     {% block navbar %}
         {% include "include/navbar.html" %}
     {% endblock %}
     {% block content %}
-        <div id="container">
+        <div class="container">
             {% block sidebar %}
             {% endblock %}
             <div class="row">
@@ -27,12 +27,12 @@
                 </div>
             </div>
         </div>
-    </div>
     {% endblock %}
+    </div>
     <div id="footer">
-      {% block footer %}
+    {% block footer %}
         {% include "include/footer.html" %}
-      {% endblock %}
+    {% endblock %}
     </div>
     {% block js %}
       {% include "include/scripts.html" %}
