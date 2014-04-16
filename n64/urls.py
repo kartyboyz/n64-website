@@ -16,9 +16,9 @@ urlpatterns = patterns('n64.views',
 			  url(r'^sign_s3/$', 'sign_request', name='sign_request'),
 )
 
-urlpatterns += patterns('n64.views',
-			  url(r'^login/$', 'login'),
-			  url(r'^logout/$', 'logout'),
+urlpatterns += patterns('',
+			  url(r'^login/$', login),
+			  url(r'^logout/$', logout),
 )
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
