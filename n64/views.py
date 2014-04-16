@@ -16,9 +16,7 @@ def query(request):
         if form.is_valid():
             cd = form.cleaned_data
             ##-format new query string
-            query_elements = cd['Elements']
-            query_elements = cd['Elements']
-            query_string = "%s:%s" % (cd['Elements'], cd['Conditions'])
+            query_string = "%s:%s" % (cd['Outputs'], cd['Filters'])
 
             ##-send GET to db
             response = requests.get('http://n64storageflask-env.elasticbeanstalk.com/query',
