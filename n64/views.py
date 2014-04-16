@@ -26,7 +26,7 @@ def query(request):
             ##-extract table from result
             query_result = json.loads(response.text)
             query_table = query_result['response']
-        return render(request, 'query.html', {'form': form, 'result_table': query_table})
+        return render(request, 'query.html', {'form': form, 'result_table': query_table, 'test': True})
 
     else:
         form = QueryForm()
