@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 from n64.forms import QueryForm
-from n64.views import home, query, watch, upload
+from n64.views import home, query, watch, upload, sign_request
 from django.contrib.auth.views import login, logout
 
 # Uncomment the next two lines to enable the admin:
@@ -14,6 +14,7 @@ urlpatterns = patterns('',
 			  url(r'^query/$', query),	
 			  url(r'^watch/$', watch),	
 			  url(r'^upload/$', upload),	
+			  url(r'^sign_s3/$', sign_request),	
 			  url(r'^login/$', login),	
 			  url(r'^logout/$', logout),	
 )
