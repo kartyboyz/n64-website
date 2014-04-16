@@ -1,4 +1,4 @@
 Django==1.6.2
 requests==2.2.1
 wsgiref==0.1.2
-pyscopg2==2.5.2
+psycopg2==2.5.2
