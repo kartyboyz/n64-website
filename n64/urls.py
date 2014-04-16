@@ -16,7 +16,7 @@ urlpatterns = patterns('n64.views',
 			  url(r'^sign_s3/$', 'sign_request', name='sign_request'),
 )
 
-urlpatterns = patterns('n64.views',
+urlpatterns += patterns('n64.views',
 			  url(r'^login/$', 'login'),
 			  url(r'^logout/$', 'logout'),
 )
