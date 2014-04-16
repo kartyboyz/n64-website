@@ -4,7 +4,7 @@ import base64, json, urllib, hmac, time, hashlib
 import uuid, os, datetime
 import requests
 
-from n64.forms import QueryForm, WatchForm
+from n64.forms import QueryForm, WatchForm, VideoForm
 
 def home(request):
     return render(request, 'base.html')
@@ -21,7 +21,7 @@ def query(request):
             put_request = "%s:%s" % (cd['Elements'], cd['Conditions'])
 
             ##-send GET to db
-            response = requests.GET('http://n64storageflask-env.elasticbeanstalk.com/users',
+            response = requests.get('http://n64storageflask-env.elasticbeanstalk.com/users',
                     data=query_string, headers={'Content-Type': 'application/json'})
             ##-extract table from result
             query_result = json.loads(response.text)
@@ -33,21 +33,21 @@ def query(request):
     return render(request, 'query.html', {'form': form})
 
 def watch(request):
-    form = WatchForm(requests.GET)
     ##ask what videos we have access to
     video_query = json.dumps({'owner': request.user.username, 'video_list': True})
-    response = requests.POST('http://n64storageflask-env.elasticbeanstalk.com/users',
+    response = requests.post('http://n64storageflask-env.elasticbeanstalk.com/users',
             data=video_query, headers={'Content-Type': 'application/json'})
     query_result = json.loads(response.text)
     video_list = query_result['video_list']
 
     if request.method == 'GET':
+        form = WatchForm(request.GET)
         if form.is_valid():
             ##ask for your video url 
             cd = form.cleaned_data
             video_num = cd['video']
             video = json.dumps({'video': video_num})
-            response = requests.GET('http://n64storageflask-env.elasticbeanstalk.com/users',
+            response = requests.get('http://n64storageflask-env.elasticbeanstalk.com/users',
                     data=video, headers={'Content-Type': 'application/json'})
             result = json.loads(response.text)
             return render(request, 'watch.html', {'form': form, 'video_list': video_list, 'video': result})
