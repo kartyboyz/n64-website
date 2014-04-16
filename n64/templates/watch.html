@@ -8,23 +8,26 @@
                         <h3 class="panel-title">Please choose your video!</h3>
                     </div>    
                     <div class="panel-body">
-                        <form action="" method="post">
-                            <table>
-                                {{ form.as_table }}
-                            </table>
-                            {% csrf_token %}
-                            <input type="submit" value="Submit">
-                        </form>
+                        <h2><i class="fa fa-camera"></i> Videos:</h2>
+                        <table class="table table-striped table-bordered table-condensed">
+                            {% for row in video_list %}
+                            <tr>
+                                {% for column in row %}
+                                    <td>{{ column }}</td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        </table>
                     </div>
                 </div>
             </div>      
-            {% if video %}
+            {% if video_url %}
             {# youtube video code - <embed id="movie_player" bgcolor="#000000" allowfullscreen="true" allowscriptaccess="always" flashvars="hl=en&sffb=true&ad_preroll=1&afv_video_min_cpm=6000000&cust_…2Fyts%2Fimg%2Fwatermark%2Fyoutube_hd_watermark-vflAzLcD6.png" name="movie_player" src="https://s.ytimg.com/yts/swfbin/player-vflj8NE0I/watch_as3.swf" type="application/x-shockwave-flash"></embed> #}
             <div class="col-md-9 content">
-                <h2><i class="fa fa-cloud"></i> Results:</h2>
+                <h2><i class="fa fa-cloud"></i> Race {{ race_num }}:</h2>
                 <video width="320" height="240" controls>
-                <source src="movie.mp4" type="video/mp4">
-                <source src="movie.ogg" type="video/ogg">
+                <source src={{ video_url }} type="video/mp4">
+                <source src={{ video_url }} type="video/ogg">
                 Your browser does not support the video tag.
                 </video> 
             </div>
