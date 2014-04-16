@@ -9,7 +9,7 @@
   </head>
 
   <body> 
-    <div class="wrap">
+    <div id="wrap">
     {% block navbar %}
         {% include "include/navbar.html" %}
     {% endblock %}
@@ -19,17 +19,16 @@
             {% endblock %}
             <div class="row">
                 <div class="col-md-5">
-                {% block main %}
-                Welcome to our website!!
-                Please upload a file to be processed or submit a query!!
-                <i src="{{ STATIC_URL }}images/koopa_beach.png" alt="Da best track!">
-                {% endblock %}
+                    {% block main %}
+                    Welcome to our website!!
+                    Please upload a file to be processed or submit a query!!
+                    <i src="{{ STATIC_URL }}images/koopa_beach.png" alt="Da best track!">
+                    {% endblock %}
                 </div>
             </div>
         </div>
     </div>
     {% endblock %}
-    </div>
     <div id="footer">
     {% block footer %}
         {% include "include/footer.html" %}
