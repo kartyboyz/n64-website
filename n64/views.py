@@ -56,9 +56,6 @@ def watch(request):
     return render(request, 'watch.html', {'form': form, 'video_list': race_list})
 
 def upload(request):
-    if request.user is None
-        ##sent to authentication
-
     if request.method == 'POST':
         url = request.POST['video_url']
         session_data = json.dumps({'video_url': url})
