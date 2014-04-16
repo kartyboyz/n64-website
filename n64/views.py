@@ -32,8 +32,7 @@ def query(request):
 
 def watch(request):
     ##ask what videos we have access to
-    response = requests.post("http://n64storageflask-env.elasticbeanstalk.com/users/%s/races" % request.user.username,
-            data=video_query, headers={'Content-Type': 'application/json'})
+    response = requests.get("http://n64storageflask-env.elasticbeanstalk.com/users/%s/races" % request.user.username) 
     race_list = response.json()
     race_urls = [race['video_url'] for race in race_list]
     
