@@ -29,7 +29,7 @@
                 </div>
             </div>      
             {% if result_table %}
-            <div class="col-md-3 content">
+            <div class="col-md-5 content">
                 {% if result_table.message %}
                     {{ result_table.message }}
                 {% else %}
@@ -47,7 +47,7 @@
                 {{ result_table.query }}
                 {% endif %}
             </div>
-            <div class="col-md-3 content">
+            <div class="col-md-5 content">
                 <h2><i class="fa fa-search"></i> Please enter new query: </h2>
                 <form id="query_form" method="post" action="/query/">
                     {% csrf_token %}
@@ -60,7 +60,7 @@
                 </form>
             </div>
             {% else %}
-            <div class="col-md-3 content">
+            <div class="col-md-5 content">
                 <h2><i class="fa fa-search"></i> Please enter query: </h2>
                 <form id="query_form" method="post" action="/query/">
                     {% csrf_token %}
