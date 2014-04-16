@@ -8,41 +8,45 @@
             <div class="col-md-3 sidebar">
                 <div class="panel panel-default" >
                     <div class="panel-heading">
-                        <h3 class="panel-title">Query language:</h3>
+                        <h3 class="panel-title">Query help:</h3>
                     </div>    
                     <div class="panel-body">
-                        <p>Elements:</br>
-                        <p>Conditions:</br>
+                        <p>Please submit queries in the following form: </br>
+                        <p>query_type modifier event subject</br></br>
+                        <p>query_type: count, average, min, max, top, bottom</br>
+                        <p>modifier: on, with, per, by, less, more, lap, place</br>
+                        <p>event: Race, Session, Get, Use, Steal, Stolen, Passing, Passed, Start, Lap, Finish, Shortcut, Watch, Tag, Banana, Spin, Crash</br>
+                        <p>subject: players, items, or courses</br></br>
+                        <p>players: Bowser, DonkeyKong, Mario, Luigi, Peach, Toad, Yoshi</br>
+                        <p>items: Banana, BananaBunch, Boo, FakeItemBox, GreenShell, TripleGreenShells,
+                                  RedShell, TripleRedShells, BlueSpinyShell, Mushroom, TripleMushrooms,
+                                  GoldenMushroom, Star, Thunderbolt</br>
+                        <p>courses: LuigiCircuit, MooMooFarm, KoopaTroopaBeach, KalimariDesert, ToadsTurnpike,
+                                    FrappeSnowland, ChocoMountain, MarioRaceway, WarioStadium, SherbertLand,
+                                    RoyalRaceway, BowsersCastle, DKsJungleParkway, BansheeBoardwalk, RainbowRoad</br>
+                        
                     </div>
                 </div>
             </div>      
-            {% if test %}
-                TEST!! Form submitted!
-            {% endif %}
-
             {% if result_table %}
             <div class="col-md-7 content">
-                TEST!! Form submitted!
+                {% if result_table.message %}
+                    {{ result_table.message }}
+                {% endif %}
+                <h2><i class="fa fa-trophy"></i> Last Query:</h2>
+                {{ result_table.query }}
                 <h2><i class="fa fa-trophy"></i> Results:</h2>
-                {% for row in result_table %}
-                <table>
-                    {{ row }}
-                </table>
-                {% endfor %}
+                {{ result_table.result }}
             </div>
             <div class="col-md-9 content">
-                <h2><i class="fa fa-cloud"></i> Please enter another query: </h2>
-                <form id="query_form" method="post" action="//">
+                <h2><i class="fa fa-cloud"></i> Please enter query: </h2>
+                <form id="query_form" method="post" action="/query/">
                     {% csrf_token %}
                     {% for hidden in form.hidden_fields %}
                         {{ hidden }}
                     {% endfor %}
 
-                    {% for field in form.visible_fields %}
-                        {{ field.errors }}
-                        {{ field.help_text}}
-                        {{ field }}
-                    {% endfor %}
+                    {{ form.as_p }}
                     <input type="submit" name="submit" value="Submit Query" />
                 </form>
             </div>
