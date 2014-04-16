@@ -27,16 +27,36 @@
             </div>
             <div class="col-md-9 content">
                 <h2><i class="fa fa-cloud"></i> Please enter another query: </h2>
-                <table>
-                    {{ form.as_table }}
-                </table>
+                <form id="query_form" method="post" action="//">
+                    {% csrf_token %}
+                    {% for hidden in form.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
+
+                    {% for field in form.visible_fields %}
+                        {{ field.errors }}
+                        {{ field.help_text}}
+                        {{ field }}
+                    {% endfor %}
+                    <input type="submit" name="submit" value="Submit Query" />
+                </form>
             </div>
             {% else %}
             <div class="col-md-9 content">
                 <h2><i class="fa fa-cloud"></i> Please enter query: </h2>
-                <table>
-                    {{ form.as_table }}
-                </table>
+                <form id="query_form" method="post" action="//">
+                    {% csrf_token %}
+                    {% for hidden in form.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
+
+                    {% for field in form.visible_fields %}
+                        {{ field.errors }}
+                        {{ field.help_text}}
+                        {{ field }}
+                    {% endfor %}
+                    <input type="submit" name="submit" value="Submit Query" />
+                </form>
             </div>
             {% endif %}
         </div>
