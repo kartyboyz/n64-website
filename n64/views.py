@@ -17,10 +17,11 @@ def query(request):
             cd = form.cleaned_data
             ##-format new query string
             query_string = "%s:%s" % (cd['Outputs'], cd['Filters'])
+            req_data = {'query': query_string}
 
             ##-send GET to db
             response = requests.get('http://n64storageflask-env.elasticbeanstalk.com/query',
-                    data=query_string, headers={'Content-Type': 'application/json'})
+                    data=req_data, headers={'Content-Type': 'application/json'})
             ##-extract table from result
             query_result = response.json()
         return render(request, 'query.html', {'form': form, 'result_table': query_result, 'test': True})
