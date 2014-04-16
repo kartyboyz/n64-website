@@ -15,13 +15,18 @@ def query(request):
         form = QueryForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            ##new query post to db
-            query_string = cd['query']
-            query = json.dumps({'query': query_string})
-            response = requests.post('http://n64storageflask-env.elasticbeanstalk.com/sessions',
+            ##format new query string
+            query_elements = cd['Elements']
+            query_elements = cd['Elements']
+            put_request = "%s:%s" % (cd['Elements'], cd['Conditions'])
+
+            ##send get to db
+            response = requests.get('http://n64storageflask-env.elasticbeanstalk.com/sessions',
                     data=query_string, headers={'Content-Type': 'application/json'})
-            result = json.loads(response.text)
-        return render(request, 'query.html', {'form': form, 'result': result})
+            ##extract table from result
+            query_result = json.loads(response.text)
+            query_table = query_result['info']
+        return render(request, 'query.html', {'form': form, 'result_table': query_response_table})
 
     else:
         form = QueryForm()
