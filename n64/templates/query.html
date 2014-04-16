@@ -17,7 +17,8 @@
                 </div>
             </div>      
             {% if result_table %}
-            <div class="col-md-9 content">
+            <div class="col-md-7 content">
+                TEST!! Form submitted!
                 <h2><i class="fa fa-trophy"></i> Results:</h2>
                 {% for row in result_table %}
                 <table>
@@ -53,7 +54,7 @@
                     {% for field in form.visible_fields %}
                         {{ field.errors }}
                         {{ field.help_text}}
-                        <input type="text" name={{ field }}>
+                        <input type="text" name={{ field }} />
                     {% endfor %}
                     <input type="submit" name="submit" value="Submit Query" />
                 </form>
