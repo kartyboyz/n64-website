@@ -5,7 +5,7 @@
 {% block content %}
     <div class="container">   
         <div class="row">
-            <div class="col-md-3 sidebar">
+            <div class="col-md-1 sidebar">
                 <div class="panel panel-default" >
                     <div class="panel-heading">
                         <h3 class="panel-title">Query help:</h3>
@@ -29,7 +29,7 @@
                 </div>
             </div>      
             {% if result_table %}
-            <div class="col-md-7 content">
+            <div class="col-md-3 content">
                 {% if result_table.message %}
                     {{ result_table.message }}
                 {% else %}
