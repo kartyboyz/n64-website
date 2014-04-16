@@ -5,17 +5,12 @@
             <div class="col-md-3 sidebar">
                 <div class="panel panel-default" >
                     <div class="panel-heading">
-                        <h3 class="panel-title">Please choose your video!</h3>
+                        <h3 class="panel-title"><i class="fa fa-video-camera"></i>Please choose your video!</h3>
                     </div>    
                     <div class="panel-body">
-                        <h2><i class="fa fa-camera"></i> Videos:</h2>
                         <table class="table table-striped table-bordered table-condensed">
                             {% for row in video_list %}
-                            <tr>
-                                {% for column in row %}
-                                    <td>{{ column }}</td>
-                                {% endfor %}
-                            </tr>
+                                <tr>{{ row }}</tr>
                             {% endfor %}
                         </table>
                     </div>
