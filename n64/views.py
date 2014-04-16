@@ -17,7 +17,7 @@ def query(request):
             cd = form.cleaned_data
             ##-format new query string
             query_string = "%s:%s" % (cd['Outputs'], cd['Filters'])
-            req_data = {'query': query_string}
+            req_data = json.dumps({'query': query_string})
 
             ##-send GET to db
             response = requests.get('http://n64storageflask-env.elasticbeanstalk.com/query',
