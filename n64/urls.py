@@ -18,7 +18,7 @@ urlpatterns = patterns('n64.views',
 
 urlpatterns += patterns('',
 			  url(r'^login/$', login),
-			  url(r'^logout/$', logout),
+			  url(r'^logout/$', logout, next_page='n64.views.home'),
 )
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
