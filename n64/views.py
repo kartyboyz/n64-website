@@ -25,8 +25,7 @@ def query(request):
                     data=query_string, headers={'Content-Type': 'application/json'})
             ##-extract table from result
             query_result = response.json()
-            query_table = query_result['response']
-        return render(request, 'query.html', {'form': form, 'result_table': query_table, 'test': True})
+        return render(request, 'query.html', {'form': form, 'result_table': query_result, 'test': True})
 
     else:
         form = QueryForm()
@@ -57,6 +56,9 @@ def watch(request):
     return render(request, 'watch.html', {'form': form, 'video_list': race_list})
 
 def upload(request):
+    if request.user is None
+        ##sent to authentication
+
     if request.method == 'POST':
         url = request.POST['video_url']
         session_data = json.dumps({'video_url': url})
@@ -88,4 +90,6 @@ def sign_request(request):
         'url': url
     })
     return HttpResponse(resp, content_type='text/plain; charset=x-user-defined')
+
+def sign_in(request):
 

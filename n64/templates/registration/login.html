@@ -3,12 +3,12 @@
 {% block content %}
     <div class="container">   
         <div class="row">
-            <h1>Upload a video</h1>
+            <h1>Please log in!</h1>
             {% if form.errors %}
             <p class="error">Sorry, that's not a valid username or password</p>
             {% endif %}
 
-            <form action="" method="post">
+            <form action="" method="get">
                 <label for="username">User name:</label>
                 <input type="text" name="username" value="" id="username">
                 <label for="password">Password:</label>
