@@ -18,11 +18,12 @@
             </div>      
             {% if result_table %}
             <div class="col-md-9 content">
-                <h2><i class="fa fa-cloud"></i> Results:</h2>
+                <h2><i class="fa fa-trophy"></i> Results:</h2>
                 {% for row in result_table %}
                 <table>
                     {{ row }}
                 </table>
+                {% endfor %}
             </div>
             <div class="col-md-9 content">
                 <h2><i class="fa fa-cloud"></i> Please enter another query: </h2>
