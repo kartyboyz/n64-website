@@ -8,14 +8,14 @@ from django.contrib.auth.views import login, logout
 # admin.autodiscover()
 
 urlpatterns = patterns('n64.views',
-              url(r'^$', name='home'),
-              url(r'^home/$', name='home'),
-			  url(r'^query/$', name='query'),
-			  url(r'^watch/$', name='watch'),
-			  url(r'^upload/$', name='upload'),
-			  url(r'^sign_s3/$', name='sign_request'),
-			  url(r'^login/$', name='login'),
-			  url(r'^logout/$', name='logout'),
+              url(r'^$', 'home', name='home'),
+              url(r'^home/$', 'home', name='home'),
+			  url(r'^query/$', 'query', name='query'),
+			  url(r'^watch/$', 'watch', name='watch'),
+			  url(r'^upload/$', 'upload', name='upload'),
+			  url(r'^sign_s3/$', 'sign_request', name='sign_request'),
+			  url(r'^login/$', 'login', name='login'),
+			  url(r'^logout/$', 'logout', name='logout'),
 )
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
