@@ -15,17 +15,17 @@ def query(request):
         form = QueryForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            ##format new query string
+            ##-format new query string
             query_elements = cd['Elements']
             query_elements = cd['Elements']
             put_request = "%s:%s" % (cd['Elements'], cd['Conditions'])
 
-            ##send get to db
+            ##-send get to db
             response = requests.get('http://n64storageflask-env.elasticbeanstalk.com/sessions',
                     data=query_string, headers={'Content-Type': 'application/json'})
-            ##extract table from result
+            ##-extract table from result
             query_result = json.loads(response.text)
-            query_table = query_result['info']
+            query_table = query_result['response']
         return render(request, 'query.html', {'form': form, 'result_table': query_response_table})
 
     else:
@@ -33,12 +33,13 @@ def query(request):
     return render(request, 'query.html', {'form': form})
 
 def watch(request):
-    form = WatchForm(request.GET)
+    form = WatchForm(requests.get)
     ##ask what videos we have access to
-    user_info = json.dumps({'user': user.username})
+    video_query = json.dumps({'owner': user.username, 'video_list': True})
     response = requests.post('http://n64storageflask-env.elasticbeanstalk.com/sessions',
-            data=user_info, headers={'Content-Type': 'application/json'})
-    video_list = json.loads(response.text)
+            data=video_query, headers={'Content-Type': 'application/json'})
+    query_result = json.loads(response.text)
+    video_list = query_result['video_list']
 
     if request.method == 'get':
         if form.is_valid():
