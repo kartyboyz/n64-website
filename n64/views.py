@@ -18,7 +18,7 @@ def query(request):
             ##-format new query string
             query_elements = cd['Elements']
             query_elements = cd['Elements']
-            put_request = "%s:%s" % (cd['Elements'], cd['Conditions'])
+            query_string = "%s:%s" % (cd['Elements'], cd['Conditions'])
 
             ##-send GET to db
             response = requests.get('http://n64storageflask-env.elasticbeanstalk.com/users',
