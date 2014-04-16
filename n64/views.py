@@ -41,7 +41,7 @@ def watch(request):
         if form.is_valid():
             ##ask for your video url 
             cd = form.cleaned_data
-            video_num = cd['video']
+            video_num = cd['videoNum']
             video = json.dumps({'video': video_num})
             response = requests.get("http://n64storageflask-env.elasticbeanstalk.com/users/%s/races" % request.user.username,
                     data=video, headers={'Content-Type': 'application/json'})
