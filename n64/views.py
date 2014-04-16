@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 import base64, json, urllib, hmac, time, hashlib
 import uuid, os, datetime
+import requests
 
 from n64.forms import QueryForm, WatchForm
 
