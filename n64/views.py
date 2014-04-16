@@ -35,6 +35,8 @@ def watch(request):
     response = requests.post("http://n64storageflask-env.elasticbeanstalk.com/users/%s/races" % request.user.username,
             data=video_query, headers={'Content-Type': 'application/json'})
     race_list = json.loads(response.text)
+    for race in race_list
+
 
     if request.method == 'GET':
         form = WatchForm(request.GET)
@@ -48,10 +50,6 @@ def watch(request):
             result = json.loads(response.text)
             return render(request, 'watch.html', {'form': form, 'video_list': race_list, 'video': result})
 
-    ##ask what videos we have access to
-    response = requests.post("http://n64storageflask-env.elasticbeanstalk.com/users/%s/races" % request.user.username,
-            data=video_query, headers={'Content-Type': 'application/json'})
-    race_list = response.json()
     return render(request, 'watch.html', {'form': form, 'video_list': race_list})
 
 def upload(request):
