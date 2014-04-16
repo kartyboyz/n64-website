@@ -32,14 +32,23 @@
             <div class="col-md-7 content">
                 {% if result_table.message %}
                     {{ result_table.message }}
-                {% endif %}
-                <h2><i class="fa fa-trophy"></i> Last Query:</h2>
-                {{ result_table.query }}
+                {% else %}
                 <h2><i class="fa fa-trophy"></i> Results:</h2>
-                {{ result_table.result }}
+                <table>
+                    {% for row in result_table.result %}
+                    <tr>
+                        {% for column in row %}
+                            <td>{{ column }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </table>
+                <h2><i class="fa fa-question-circle"></i> Last Query:</h2>
+                {{ result_table.query }}
+                {% endif %}
             </div>
             <div class="col-md-9 content">
-                <h2><i class="fa fa-cloud"></i> Please enter query: </h2>
+                <h2><i class="fa fa-search"></i> Please enter new query: </h2>
                 <form id="query_form" method="post" action="/query/">
                     {% csrf_token %}
                     {% for hidden in form.hidden_fields %}
@@ -52,7 +61,7 @@
             </div>
             {% else %}
             <div class="col-md-9 content">
-                <h2><i class="fa fa-cloud"></i> Please enter query: </h2>
+                <h2><i class="fa fa-search"></i> Please enter query: </h2>
                 <form id="query_form" method="post" action="/query/">
                     {% csrf_token %}
                     {% for hidden in form.hidden_fields %}
