@@ -31,9 +31,10 @@
             {% if result_table %}
             <div class="col-md-5 content">
                 {% if result_table.message %}
+                    <h3><i class="fa fa-warning"></i> Error:</h3>
                     {{ result_table.message }}
                 {% else %}
-                <h2><i class="fa fa-trophy"></i> Results:</h2>
+                <h3><i class="fa fa-trophy"></i> Results:</h3>
                 <table class="table table-striped table-bordered table-condensed">
                     {% for row in result_table.results %}
                     <tr>
@@ -43,12 +44,12 @@
                     </tr>
                     {% endfor %}
                 </table>
-                <h2><i class="fa fa-question-circle"></i> Last Query:</h2>
+                <h3><i class="fa fa-question-circle"></i> Last Query:</h3>
                 {{ result_table.query }}
                 {% endif %}
             </div>
             <div class="col-md-5 content">
-                <h2><i class="fa fa-search"></i> Please enter new query: </h2>
+                <h3><i class="fa fa-search"></i> Please enter new query: </h3>
                 <form id="query_form" method="post" action="/query/">
                     {% csrf_token %}
                     {% for hidden in form.hidden_fields %}
@@ -61,7 +62,7 @@
             </div>
             {% else %}
             <div class="col-md-5 content">
-                <h2><i class="fa fa-search"></i> Please enter query: </h2>
+                <h3><i class="fa fa-search"></i> Please enter query: </h3>
                 <form id="query_form" method="post" action="/query/">
                     {% csrf_token %}
                     {% for hidden in form.hidden_fields %}
