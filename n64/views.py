@@ -42,13 +42,11 @@ def watch(request):
             ##ask for your video url 
             cd = form.cleaned_data
             video_num = cd['videoNum']
-            video = json.dumps({'video': video_num})
-            response = requests.get("http://n64storageflask-env.elasticbeanstalk.com/users/%s/races" % 'mgabed')
-            result = response.json()
-            return render(request, 'watch.html', {'form': form, 'video_list': race_url_container, 'video': result})
+            video_url = race_url[video_num]
+            return render(request, 'watch.html', {'form': form, 'video_list': race_urls, 'video_url': video_url})
 
     form = WatchForm()
-    return render(request, 'watch.html', {'form': form, 'video_list': race_url_container})
+    return render(request, 'watch.html', {'form': form, 'video_list': race_urls})
 
 def upload(request):
     if request.method == 'POST':
