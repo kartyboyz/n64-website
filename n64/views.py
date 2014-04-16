@@ -21,10 +21,10 @@ def query(request):
             query_string = "%s:%s" % (cd['Elements'], cd['Conditions'])
 
             ##-send GET to db
-            response = requests.get('http://n64storageflask-env.elasticbeanstalk.com/users',
+            response = requests.get('http://n64storageflask-env.elasticbeanstalk.com/query',
                     data=query_string, headers={'Content-Type': 'application/json'})
             ##-extract table from result
-            query_result = json.loads(response.text)
+            query_result = response.json()
             query_table = query_result['response']
         return render(request, 'query.html', {'form': form, 'result_table': query_table, 'test': True})
 
@@ -34,11 +34,9 @@ def query(request):
 
 def watch(request):
     ##ask what videos we have access to
-    video_query = json.dumps({'owner': request.user.username, 'video_list': True})
-    response = requests.post('http://n64storageflask-env.elasticbeanstalk.com/users',
+    response = requests.post("http://n64storageflask-env.elasticbeanstalk.com/users/%s/races" % request.user.username,
             data=video_query, headers={'Content-Type': 'application/json'})
-    query_result = json.loads(response.text)
-    video_list = query_result['video_list']
+    race_list = json.loads(response.text)
 
     if request.method == 'GET':
         form = WatchForm(request.GET)
@@ -47,12 +45,16 @@ def watch(request):
             cd = form.cleaned_data
             video_num = cd['video']
             video = json.dumps({'video': video_num})
-            response = requests.get('http://n64storageflask-env.elasticbeanstalk.com/users',
+            response = requests.get("http://n64storageflask-env.elasticbeanstalk.com/users/%s/races" % request.user.username,
                     data=video, headers={'Content-Type': 'application/json'})
             result = json.loads(response.text)
-            return render(request, 'watch.html', {'form': form, 'video_list': video_list, 'video': result})
+            return render(request, 'watch.html', {'form': form, 'video_list': race_list, 'video': result})
 
-    return render(request, 'watch.html', {'form': form, 'video_list': video_list})
+    ##ask what videos we have access to
+    response = requests.post("http://n64storageflask-env.elasticbeanstalk.com/users/%s/races" % request.user.username,
+            data=video_query, headers={'Content-Type': 'application/json'})
+    race_list = response.json()
+    return render(request, 'watch.html', {'form': form, 'video_list': race_list})
 
 def upload(request):
     if request.method == 'POST':
