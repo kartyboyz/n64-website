@@ -83,7 +83,11 @@ img {
   padding-right: 15px;
 }
 
-.sidebar { }
+.sidebar {
+    padding: 20px 0 10px 0;
+    margin-left: 545px;
+    width: 190px;
+}
 .machine { margin-top: 40px; clear:both;}
 .btn-deploy { margin-top: 70px; }
 
