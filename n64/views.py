@@ -16,7 +16,7 @@ def query(request):
         if form.is_valid():
             cd = form.cleaned_data
             ##-format new query string
-            query_string = "%s:%s" % (cd['Outputs'], cd['Filters'])
+            query_string = "%s : %s" % (cd['Outputs'], cd['Filters'])
             req_data = json.dumps({'query': query_string})
 
             ##-send GET to db
