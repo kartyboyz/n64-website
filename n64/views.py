@@ -46,7 +46,7 @@ def watch(request):
             return render(request, 'watch.html', {'form': form, 'video_list': race_urls, 'video_num': video_num, 'video_url': video_url})
 
     form = WatchForm()
-    return render(request, 'watch.html', {'form': form, 'video_list': race_urls})
+    return render(request, 'watch.html', {'form': form, 'video_list': race_list})
 
 def upload(request):
     if request.method == 'POST':
