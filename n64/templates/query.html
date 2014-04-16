@@ -34,7 +34,7 @@
                     {{ result_table.message }}
                 {% else %}
                 <h2><i class="fa fa-trophy"></i> Results:</h2>
-                <table>
+                <table class="table table-striped table-bordered table-condensed">
                     {% for row in result_table.results %}
                     <tr>
                         {% for column in row %}
