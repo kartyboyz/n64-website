@@ -21,13 +21,14 @@
                     </div>
                 </div>
             </div>      
-            <div class="col-md-9 content">
-                <h2><i class="fa fa-cloud"></i> Race {{ race_num }}:</h2>
+            {% if video_url %}
+            <div class="col-md-7 content">
+                <h2><i class="fa fa-cloud"></i> Race {{ video_num }}:</h2>
                 <video
                 id="test_video" class="video-js vjs-default-skin"
                 controls proload="auto" width="640" height="480"
                 data-setup='{"example":true}'>
-                <source src="{{ race_url }}" type="video/mp4" />
+                <source src="{{ video_url }}" type="video/mp4" />
                 </video> 
             </div>
         </div>
