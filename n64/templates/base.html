@@ -15,13 +15,16 @@
     {% endblock %}
     {% block content %}
         <div class="container">
-            {% block sidebar %}
-            {% endblock %}
             <div class="row">
-                    {% block main %}
-                    <center><h3>Welcome to our website  ~  Please upload a file to be processed or submit a query</h3></br></br>
-                    <img src="{{ STATIC_URL }}images/koopa_beach.png" width="400" alt="Da best track!">
-                    {% endblock %}
+                {% block sidebar %}
+                <div class="col-md-3" name="sign_in">
+                </div>
+                {% include "include/login.html" %}     
+                {% endblock %}
+                {% block main %}
+                <center><h3>welcome to our website  ~  please sign in to get started</h3></br></br>
+                <img src="{{ STATIC_URL }}images/koopa_beach.png" width="400" alt="Da best track!">
+                {% endblock %}
             </div>
         </div>
     </div>
