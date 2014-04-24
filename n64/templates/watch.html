@@ -12,7 +12,7 @@
                             {% for row in video_list %}
                             <tr><td>
                                 <form name="watchform" action="/watch/" method="GET">
-                                    <input type="hidden" name="" value="English">
+                                    <input type="hidden" name="video_id" value="{{ row.id }}">
                                     <input type="submit" value="{{ row.course }}">
                                 </form>
                             </td></td>
