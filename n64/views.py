@@ -37,8 +37,7 @@ def watch(request):
     race_list = response.json()
     race_urls = []
     for race in race_list:
-        race_index = race_list[race]
-        race_urls.append(race_index['video_processed_url'])
+        race_urls.append(race['video_processed_url'])
     
     if request.method == 'GET':
         video_num = request.GET['video_id']
