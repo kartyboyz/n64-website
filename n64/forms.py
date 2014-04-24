@@ -5,4 +5,4 @@ class QueryForm(forms.Form):
     Filters = forms.CharField(required=False)
 
 class WatchForm(forms.Form):
-    videoNum = forms.IntegerField()
+    video_id = forms.IntegerField()
