@@ -32,18 +32,18 @@ def query(request):
 
 def watch(request):
     ##ask what videos we have access to
-    response = requests.get("http://n64storageflask-env.elasticbeanstalk.com/races") 
+    user = 'mgabed'
+    response = requests.get("http://n64storageflask-env.elasticbeanstalk.com/users/%s/races" % mgabed) 
     race_list = response.json()
-    race_urls = [race['video_url'] for race in race_list]
+    race_urls = []
+    for race in race_list:
+        race_index = race_list[race]
+        race_urls.append(race_index['video_processed_url'])
     
     if request.method == 'GET':
-        form = WatchForm(request.GET)
-        if form.is_valid():
-            ##ask for your video url 
-            cd = form.cleaned_data
-            video_num = cd['video_id']
-            video_url = race_urls[video_num]
-            return render(request, 'watch.html', {'form': form, 'video_list': race_urls, 'video_num': video_num, 'video_url': video_url})
+        video_num = request.GET['video_id']
+        video_url = race_urls[video_num]
+        return render(request, 'watch.html', {'form': form, 'video_list': race_urls, 'video_num': video_num, 'video_url': video_url})
 
     form = WatchForm()
     return render(request, 'watch.html', {'form': form, 'video_list': race_list})
