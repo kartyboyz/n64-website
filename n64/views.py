@@ -31,6 +31,7 @@ def query(request):
     return render(request, 'query.html', {'form': form})
 
 def watch(request):
+    form = WatchForm()
     ##ask what videos we have access to
     user = 'mgabed'
     response = requests.get("http://n64storageflask-env.elasticbeanstalk.com/users/%s/races" % user) 
@@ -44,7 +45,6 @@ def watch(request):
         video_url = race_urls[video_num]
         return render(request, 'watch.html', {'form': form, 'video_list': race_urls, 'video_num': video_num, 'video_url': video_url})
 
-    form = WatchForm()
     return render(request, 'watch.html', {'form': form, 'video_list': race_list})
 
 def upload(request):
