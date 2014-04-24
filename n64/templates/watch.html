@@ -11,7 +11,7 @@
                         <table class="table table-striped table-bordered table-condensed">
                             {% for row in video_list %}
                             <tr><td>
-                                <form name="watchform" action="//" method="GET">
+                                <form name="watchform" action="/watch/" method="GET">
                                     <input type="hidden" name="" value="English">
                                     <input type="submit" value="{{ row.course }}">
                                 </form>
