@@ -40,8 +40,7 @@ def watch(request):
         race_urls.append(race['video_processed_url'])
     
     if request.method == 'GET' and 'video_id' in request.GET:
-        data = request.GET['video_id']
-        video_num = int(data.values())
+        video_num = int(request.GET['video_id'])
 
         video_url = race_urls[video_num]
         return render(request, 'watch.html', {'form': form, 'video_list': race_urls, 'video_num': video_num, 'video_url': video_url})
