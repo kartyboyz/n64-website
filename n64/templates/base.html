@@ -17,13 +17,13 @@
         <div class="container">
             <div class="row">
                 {% block sidebar %}
-                <div class="col-md-3" name="sign_in">
-                </div>
-                {% include "include/login.html" %}     
+                    <div class="col-md-3" name="sign_in">
+                    </div>
+                    {% include "include/login.html" %}     
                 {% endblock %}
                 {% block main %}
-                <center><h3>welcome to our website  ~  please sign in to get started</h3></br></br>
-                <img src="{{ STATIC_URL }}images/koopa_beach.png" width="400" alt="Da best track!">
+                    <center><h3>welcome to our website  ~  please sign in to get started</h3></br></br>
+                    <img src="{{ STATIC_URL }}images/koopa_beach.png" width="400" alt="Da best track!">
                 {% endblock %}
             </div>
         </div>
