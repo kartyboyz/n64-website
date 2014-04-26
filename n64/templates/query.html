@@ -2,7 +2,7 @@
 
 {% block title %}Query{% endblock %}
 {% block sidebar %}
-    <div class="col-md-1 sidebar">
+    <div class="col-md-4 col-sm-2">
         <div class="panel panel-default" >
             <div class="panel-heading">
                 <h3 class="panel-title">Query help:</h3>
@@ -28,7 +28,7 @@
 {% endblock %}
 {% block main %}
     {% if result_table %}
-    <div class="col-md-5 content">
+    <div class="col-md-5">
         {% if result_table.message %}
             <h3><i class="fa fa-warning"></i> Error:</h3>
             {{ result_table.message }}
@@ -47,7 +47,7 @@
         {{ result_table.query }}
         {% endif %}
     </div>
-    <div class="col-md-5 content">
+    <div class="col-md-5">
         <h3><i class="fa fa-search"></i> Please enter new query: </h3>
         <form id="query_form" method="post" action="/query/">
             {% csrf_token %}
@@ -60,7 +60,7 @@
         </form>
     </div>
     {% else %}
-    <div class="col-md-5 content">
+    <div class="col-md-5">
         <h3><i class="fa fa-search"></i> Please enter query: </h3>
         <form id="query_form" method="post" action="/query/">
             {% csrf_token %}

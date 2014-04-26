@@ -26,7 +26,7 @@ body {
 
 
 
-/* Custom MOC Styling
+/* Custom Karty Styling
 -------------------------------------------------- */
 body{ font-family: 'Share Tech', sans-serif; }
 .navbar-default { background-color: #0c2a3e; min-height: 100px;}
@@ -43,23 +43,6 @@ body{ font-family: 'Share Tech', sans-serif; }
 
 .logoText { margin-top: 4px; }
 
-/* For Simile/Exhibit images */
-img.thumb {
-  max-height:100px;
-  max-width:100px;
-}
-div.serviceThumbnail {
-  float:      left;
-  width:      13em;
-  height:     12em;
-//  border:     1px solid #BCB79E;
-//  background: #F0FFF0;
-  padding:    1em;
-  margin:     0.5em;
-  text-align: center;
-  vertical-align: middle;
-  display: inline-block;
-}
 div.boxed {
 	border: 1px solid black;
 	text-align: center;

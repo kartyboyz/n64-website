@@ -1,5 +1,8 @@
+from django import forms
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.contrib import auth
+from django.contrib.auth.forms import UserCreationForm
 import base64, json, urllib, hmac, time, hashlib
 import uuid, os, datetime
 import requests
@@ -8,6 +11,37 @@ from n64.forms import QueryForm, WatchForm
 
 def home(request):
     return render(request, 'base.html')
+
+def login(request):
+    username = request.POST.get('username', '')
+    password = request.POST.get('password', '')
+    user = auth.authenticate(username=username, password=password)
+
+    # Correct password, and the user is marked "active"
+    if user is not None and user.is_active:
+        auth.login(request, user)
+        # Redirect to a success page.
+        return render(request, 'base.html', {'logged_in':1})
+    else:
+        # Show an error page
+        return render(request, 'base.html', {'logged_in':0, 'user_name': user})
+
+def logout(request):
+    auth.logout(request)
+    # Redirect to a success page.
+    return render(request, 'base.html', {'logged_out':1})
+
+def create_user(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            return render(request, 'base.html', {'logged_in':1})
+        else:
+            return render(request, "create_user.html", {'form': form,})
+    else:
+        form = UserCreationForm()
+        return render(request, "create_user.html", {'form': form,})
 
 def query(request):
     ##if we have a query, send query, wait for response
@@ -56,7 +90,7 @@ def watch(request):
 
 def upload(request):
     if request.method == 'POST':
-        url = request.POST['video_url']
+        url = request.POST.get('video_url')
         session_data = json.dumps({'video_url': url})
         requests.post('http://n64storageflask-env.elasticbeanstalk.com/sessions',
                 data=session_data, headers={'Content-Type': 'application/json'})
@@ -86,6 +120,3 @@ def sign_request(request):
         'url': url
     })
     return HttpResponse(resp, content_type='text/plain; charset=x-user-defined')
-
-def sign_in(request):
-    stuff = notdone

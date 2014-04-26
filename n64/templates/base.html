@@ -9,26 +9,33 @@
   </head>
 
   <body> 
-    <div id="wrap">
     {% block navbar %}
         {% include "include/navbar.html" %}
     {% endblock %}
-    {% block content %}
+    <div id="wrap">
         <div class="container">
-            <div class="row">
+            <div id="row">
+            {% block content %}
                 {% block sidebar %}
-                    <div class="col-md-3" name="sign_in">
-                    </div>
-                    {% include "include/login.html" %}     
+                <div class="col-sm-3">
+                    {% include "include/account.html" %}     
+                </div>
                 {% endblock %}
+
                 {% block main %}
-                    <center><h3>welcome to our website  ~  please sign in to get started</h3></br></br>
+                <div class="col-md-9">
+                    {% if user.is_authenticated %}
+                        <center><h3>~ welcome to our website ~ please use links ^ to query / watch / upload ~</h3></br></br>
+                    {% else %}
+                        <center><h3>~ welcome to our website  ~  please sign in to get started ~</h3></br></br>
+                    {% endif %}
                     <img src="{{ STATIC_URL }}images/koopa_beach.png" width="400" alt="Da best track!">
+                </div>
                 {% endblock %}
             </div>
+        {% endblock %}
         </div>
     </div>
-    {% endblock %}
     <div id="footer">
     {% block footer %}
         {% include "include/footer.html" %}
@@ -37,6 +44,5 @@
     {% block js %}
       {% include "include/scripts.html" %}
     {% endblock %}
-    <div id="modal_wrapper" />
   </body>
 </html>
