@@ -3,9 +3,9 @@
 {% else %}
 <div class="panel panel-default" >
     <div class="panel-heading">
-        <h3 class="panel-title">please log in</h3>
+        <h3 class="panel-title">log in:</h3>
     </div>    
-    <div class="panel-body">
+    <div class="panel-body"><center>
         <form method="post" id="accountForm" action="/login/">
             {% csrf_token %}
             <label for="username">user name:</label></br>
@@ -15,11 +15,11 @@
             <input type="hidden" name="next" value="{{ next|escape }}" /></br>
             <button type="submit" class="btn btn-primary" >login</button>
         </form>
-        Or 
+        Or
         <form method="post" id="createUser" action="/create_user/">
             {% csrf_token %}
             <button type="submit" class="btn btn-primary"  >create account</button></br>
         </form>
-    </div>
+    </center></div>
 </div>
 {% endif %}

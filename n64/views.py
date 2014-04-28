@@ -7,7 +7,7 @@ import base64, json, urllib, hmac, time, hashlib
 import uuid, os, datetime
 import requests
 
-from n64.forms import QueryForm, WatchForm 
+from n64.forms import BoxQueryForm, TextQueryForm, WatchForm 
 
 def home(request):
     return render(request, 'base.html')
@@ -44,9 +44,15 @@ def create_user(request):
         return render(request, "create_user.html", {'form': form,})
 
 def query(request):
+
+    ##ask for the query language API
+    response = requests.get("http://n64storageflask-env.elasticbeanstalk.com/query/info")
+    query_api = response.json()
+
+
     ##if we have a query, send query, wait for response
     if request.method == 'POST':
-        form = QueryForm(request.POST)
+        form = TextQueryForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
             ##-format new query string
@@ -58,11 +64,11 @@ def query(request):
                     data=req_data, headers={'Content-Type': 'application/json'})
             ##-extract table from result
             query_result = response.json()
-        return render(request, 'query.html', {'form': form, 'result_table': query_result, 'test': True})
+        return render(request, 'query.html', {'form': form, 'query_api': query_api, 'result_table': query_result, 'test': True})
 
     else:
-        form = QueryForm()
-    return render(request, 'query.html', {'form': form})
+        form = TextQueryForm()
+    return render(request, 'query.html', {'form': form, 'query_api': query_api})
 
 def watch(request):
     form = WatchForm()

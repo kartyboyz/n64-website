@@ -1,6 +1,9 @@
 from django import forms
 
-class QueryForm(forms.Form):
+class BoxQueryForm(forms.Form):
+    Events = forms.CharField()
+
+class TextQueryForm(forms.Form):
     Outputs = forms.CharField(required=False)
     Filters = forms.CharField(required=False)
 

@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
-from n64.forms import QueryForm
+from n64.forms import BoxQueryForm, TextQueryForm
 from django.contrib.auth.views import login, logout
 
 # Uncomment the next two lines to enable the admin:

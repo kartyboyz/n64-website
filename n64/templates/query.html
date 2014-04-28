@@ -6,8 +6,39 @@
         <div class="panel panel-default" >
             <div class="panel-heading">
                 <h3 class="panel-title">Query help:</h3>
-            </div>    
+            </div>
             <div class="panel-body">
+                <form id="query_api" method="post" action="/query/">
+                    {% csrf_token %}
+                    outputs:    <select>
+                        {% for choice in query_api.outputs %}
+                        <option value="{{ choice }}">{{ choice }}</option>
+                        {% endfor %}
+                    </select></br>
+                    characters: <select>
+                        {% for choice in query_api.characters %}
+                        <option value="{{ choice }}">{{ choice }}</option>
+                        {% endfor %}
+                    </select></br>
+                    courses:    <select>
+                        {% for choice in query_api.courses %}
+                        <option value="{{ choice }}">{{ choice }}</option>
+                        {% endfor %}
+                    </select></br>
+                    fields:     <select>
+                        {% for choice in query_api.fields %}
+                        <option value="{{ choice }}">{{ choice }}</option>
+                        {% endfor %}
+                    </select></br>
+                    filters:    <select>
+                        {% for choice in query_api.filters %}
+                        <option value="{{ choice }}">{{ choice }}</option>
+                        {% endfor %}
+                    </select></br>
+                    <input type="submit" name="submit" value="Submit Query" />
+                </form>
+            </div>
+            {% comment %}<div class="panel-body">
                 <p>Please submit queries in the following form: </br>
                 <p>[query_type] [modifier] [event] [subject]</br></br>
                 <p>[query_type]: count, average, min, max, top, bottom</br>
@@ -22,7 +53,7 @@
                             FrappeSnowland, ChocoMountain, MarioRaceway, WarioStadium, SherbertLand,
                             RoyalRaceway, BowsersCastle, DKsJungleParkway, BansheeBoardwalk, RainbowRoad</br>
                 
-            </div>
+                        </div>{% endcomment %}
         </div>
     </div>      
 {% endblock %}
