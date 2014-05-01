@@ -12,27 +12,27 @@
                     {% csrf_token %}
                     outputs:    <select>
                         {% for choice in query_api.outputs %}
-                        <option value="{{ choice }}">{{ choice }}</option>
+                        <option name="outputs" value="{{ choice }}">{{ choice }}</option>
                         {% endfor %}
                     </select></br>
                     characters: <select>
                         {% for choice in query_api.characters %}
-                        <option value="{{ choice }}">{{ choice }}</option>
+                        <option name="characters" value="{{ choice }}">{{ choice }}</option>
                         {% endfor %}
                     </select></br>
                     courses:    <select>
                         {% for choice in query_api.courses %}
-                        <option value="{{ choice }}">{{ choice }}</option>
+                        <option name="courses" value="{{ choice }}">{{ choice }}</option>
                         {% endfor %}
                     </select></br>
                     fields:     <select>
                         {% for choice in query_api.fields %}
-                        <option value="{{ choice }}">{{ choice }}</option>
+                        <option name="fields" value="{{ choice }}">{{ choice }}</option>
                         {% endfor %}
                     </select></br>
                     filters:    <select>
                         {% for choice in query_api.filters %}
-                        <option value="{{ choice }}">{{ choice }}</option>
+                        <option name="filters" value="{{ choice }}">{{ choice }}</option>
                         {% endfor %}
                     </select></br>
                     <input type="submit" name="submit" value="Submit Query" />
@@ -105,4 +105,10 @@
     </div>
     {% endif %}
 {% endblock %}
-
+{% block js %}
+    {% include "include/scripts.html" %}
+    {% if result_table %}
+    <link href="" rel="stylesheet">
+    <script src=""></script>
+    {% endif %}
+{% endblock %}

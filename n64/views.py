@@ -58,13 +58,30 @@ def query(request):
             ##-format new query string
             query_string = "%s : %s" % (cd['Outputs'], cd['Filters'])
             req_data = json.dumps({'query': query_string})
-
             ##-send GET to db
             response = requests.get('http://n64storageflask-env.elasticbeanstalk.com/query',
                     data=req_data, headers={'Content-Type': 'application/json'})
             ##-extract table from result
             query_result = response.json()
-        return render(request, 'query.html', {'form': form, 'query_api': query_api, 'result_table': query_result, 'test': True})
+            return render(request, 'query.html', {'form': form, 'query_api': query_api, 'result_table': query_result, 'test': True})
+        else:
+            if "outputs" in request.POST.get():
+                outputs = request.POST.get("outputs")
+            if "characters" in request.POST.get():
+                char = request.POST.get("characters")
+            if "courses" in request.POST.get():
+                courses = request.POST.get("courses")
+            if "fields" in request.POST.get():
+                fields = request.POST.get("fields")
+
+            query_string = "%s %s : %s %s" % (outputs, char, courses, fields)
+            req_data = json.dumps({'query': query_string})
+            ##-send GET to db
+            response = requests.get('http://n64storageflask-env.elasticbeanstalk.com/query',
+                    data=req_data, headers={'Content-Type': 'application/json'})
+            ##-extract table from result
+            query_result = response.json()
+            return render(request, 'query.html', {'form': form, 'query_api': query_api, 'result_table': query_result, 'test': True})
 
     else:
         form = TextQueryForm()
