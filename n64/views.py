@@ -144,7 +144,7 @@ def upload(request):
 
     if request.method == 'POST':
         url = request.POST.get('video_url')
-        session_data = json.dumps({'video_url': url, 'user': user.username})
+        session_data = json.dumps({'video_url': url, 'user': request.user.username})
         requests.post('http://n64storageflask-env.elasticbeanstalk.com/sessions',
                 data=session_data, headers={'Content-Type': 'application/json'})
         return redirect('upload')
