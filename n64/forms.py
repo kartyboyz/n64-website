@@ -4,8 +4,8 @@ class BoxQueryForm(forms.Form):
     Events = forms.CharField()
 
 class TextQueryForm(forms.Form):
-    Outputs = forms.CharField(required=False)
-    Filters = forms.CharField(required=False)
+    Output_text = forms.CharField(required=False)
+    Filter_text = forms.CharField(required=False)
 
 class WatchForm(forms.Form):
     video_id = forms.IntegerField()

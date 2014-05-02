@@ -1,59 +1,77 @@
-{% extends "base.html" %}
-
+{% extends "base.html" %} 
 {% block title %}Query{% endblock %}
 {% block sidebar %}
     <div class="col-md-4 col-sm-2">
         <div class="panel panel-default" >
+            {% if not output_set or filter_set %}
             <div class="panel-heading">
-                <h3 class="panel-title">Query help:</h3>
+                <h3 class="panel-title">choose output or filter to add:</h3>
             </div>
             <div class="panel-body">
                 <form id="query_api" method="post" action="/query/">
                     {% csrf_token %}
-                    outputs:    <select>
+                    output:    <select>
                         {% for choice in query_api.outputs %}
-                        <option name="outputs" value="{{ choice }}">{{ choice }}</option>
+                        <option name="output" value="{{ choice }}">{{ choice }}</option>
                         {% endfor %}
                     </select></br>
-                    characters: <select>
-                        {% for choice in query_api.characters %}
-                        <option name="characters" value="{{ choice }}">{{ choice }}</option>
-                        {% endfor %}
-                    </select></br>
-                    courses:    <select>
-                        {% for choice in query_api.courses %}
-                        <option name="courses" value="{{ choice }}">{{ choice }}</option>
-                        {% endfor %}
-                    </select></br>
-                    fields:     <select>
-                        {% for choice in query_api.fields %}
-                        <option name="fields" value="{{ choice }}">{{ choice }}</option>
-                        {% endfor %}
-                    </select></br>
-                    filters:    <select>
+                    filter:    <select>
                         {% for choice in query_api.filters %}
-                        <option name="filters" value="{{ choice }}">{{ choice }}</option>
+                        <option name="filter" value="{{ choice }}">{{ choice }}</option>
                         {% endfor %}
                     </select></br>
-                    <input type="submit" name="submit" value="Submit Query" />
+                    <input type="submit" name="submit" value="Specify Parameter" />
                 </form>
             </div>
-            {% comment %}<div class="panel-body">
-                <p>Please submit queries in the following form: </br>
-                <p>[query_type] [modifier] [event] [subject]</br></br>
-                <p>[query_type]: count, average, min, max, top, bottom</br>
-                <p>[modifier]: on, with, per, by, less, more, lap, place</br>
-                <p>[event]: Race, Session, Get, Use, Steal, Stolen, Passing, Passed, Start, Lap, Finish, Shortcut, Watch, Tag, Banana, Spin, Crash</br>
-                <p>[subject]: options detailed below</br></br>
-                <p>[players]: Bowser, DonkeyKong, Mario, Luigi, Peach, Toad, Yoshi</br>
-                <p>[items]: Banana, BananaBunch, Boo, FakeItemBox, GreenShell, TripleGreenShells,
-                          RedShell, TripleRedShells, BlueSpinyShell, Mushroom, TripleMushrooms,
-                          GoldenMushroom, Star, Thunderbolt</br>
-                <p>[courses]: LuigiCircuit, MooMooFarm, KoopaTroopaBeach, KalimariDesert, ToadsTurnpike,
-                            FrappeSnowland, ChocoMountain, MarioRaceway, WarioStadium, SherbertLand,
-                            RoyalRaceway, BowsersCastle, DKsJungleParkway, BansheeBoardwalk, RainbowRoad</br>
-                
-                        </div>{% endcomment %}
+            {% endif %}
+            {% if output_set %}
+            <div class="panel-heading">
+                <h3 class="panel-title">specify output:</h3>
+            </div>
+            <div class="panel-body">
+                <form id="query_api" method="post" action="/query/"><center>
+                    {% csrf_token %}
+                        {% for field, list in query_api.selectors.items %}
+                            {{ field }}: <select>
+                            {% for choice in list %}
+                            <option name="{{ field }}" value="{{ choice }}">{{ choice }}</option>
+                            {% endfor %}
+                        </select></br>
+                        filter:    <select>
+                            {% for choice in query_api.fields %}
+                            <option name="filter" value="{{ choice }}">{{ choice }}</option>
+                            {% endfor %}
+                        </select></br>
+                        {% endfor %}
+                    <input type="submit" name="submit" value="Add to query" />
+                </center></form>
+            </div>
+            {% endif %}
+            {% if filter_set %}
+            <div class="panel-heading">
+                <h3 class="panel-title">specify filters:</h3>
+            </div>
+            <div class="panel-body">
+                <form id="query_api" method="post" action="/query/"><center>
+                    {% csrf_token %}
+                        {% for field, list in query_api.selectors.items %}
+                            {{ field }}: <select>
+                            {% for choice in list %}
+                            <option name="{{ field }}" value="{{ choice }}">{{ choice }}</option>
+                            {% endfor %}
+                        </select></br>
+                        {% endfor %}
+                        {% if type1 %}
+                        filter:    <select>
+                            {% for choice in query_api.filters %}
+                            <option name="filter" value="{{ choice }}">{{ choice }}</option>
+                            {% endfor %}
+                        </select></br>
+                        {% endif %}
+                    <input type="submit" name="submit" value="Add to query" />
+                </center></form>
+            </div>
+            {% endif %}
         </div>
     </div>      
 {% endblock %}
@@ -65,7 +83,7 @@
             {{ result_table.message }}
         {% else %}
         <h3><i class="fa fa-trophy"></i> Results:</h3>
-        <table class="table table-striped table-bordered table-condensed">
+        <table name="query_table" class="table table-striped table-bordered table-condensed">
             {% for row in result_table.results %}
             <tr>
                 {% for column in row %}
@@ -74,6 +92,7 @@
             </tr>
             {% endfor %}
         </table>
+        <script> $(query_table).dataTable();</script>
         <h3><i class="fa fa-question-circle"></i> Last Query:</h3>
         {{ result_table.query }}
         {% endif %}
@@ -109,6 +128,7 @@
     {% include "include/scripts.html" %}
     {% if result_table %}
     <link href="" rel="stylesheet">
+    <script type="text/javascript" src="{{ STATIC_URL }}resources/js/datatables.js">
     <script src=""></script>
     {% endif %}
 {% endblock %}

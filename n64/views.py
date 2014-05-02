@@ -10,7 +10,11 @@ import requests
 from n64.forms import BoxQueryForm, TextQueryForm, WatchForm 
 
 def home(request):
-    return render(request, 'base.html')
+    if request.user.is_authenticated():
+        return render(request, 'base.html', {'logged_in':1})
+    else:
+        #show base home page
+        return render(request, 'base.html', {'logged_in':0})
 
 def login(request):
     username = request.POST.get('username', '')
@@ -44,11 +48,28 @@ def create_user(request):
         return render(request, "create_user.html", {'form': form,})
 
 def query(request):
+    if not request.user.is_authenticated():
+        return redirect('home')
 
     ##ask for the query language API
     response = requests.get("http://n64storageflask-env.elasticbeanstalk.com/query/info")
     query_api = response.json()
+    
+    if "reset_query" in request.POST:
+        current_output = "count item"
+        current_filter = "by finish"
 
+    if "current_output" in request.POST:
+        current_output = request.POST.get("current_output ")
+    else:
+        current_output = ""
+
+    if "current_filter" in request.POST:
+        current_filter = request.POST.get("current_filter")
+    else:
+        current_filter = ""
+
+    ######TODO: format query_string from dropdown inputs, pass query_string as invisible field through form
 
     ##if we have a query, send query, wait for response
     if request.method == 'POST':
@@ -56,41 +77,47 @@ def query(request):
         if form.is_valid():
             cd = form.cleaned_data
             ##-format new query string
-            query_string = "%s : %s" % (cd['Outputs'], cd['Filters'])
+            query_string = "%s : %s" % (cd['Output_text'], cd['Filter_text'])
             req_data = json.dumps({'query': query_string})
             ##-send GET to db
             response = requests.get('http://n64storageflask-env.elasticbeanstalk.com/query',
                     data=req_data, headers={'Content-Type': 'application/json'})
             ##-extract table from result
             query_result = response.json()
-            return render(request, 'query.html', {'form': form, 'query_api': query_api, 'result_table': query_result, 'test': True})
+            return render(request, 'query.html', {'form': form, 'step_1': True, 'query_api': query_api, 'current_output': current_output,
+                                                   'current_filter': current_filter, 'result_table': query_result,})
         else:
-            if "outputs" in request.POST.get():
-                outputs = request.POST.get("outputs")
-            if "characters" in request.POST.get():
-                char = request.POST.get("characters")
-            if "courses" in request.POST.get():
-                courses = request.POST.get("courses")
-            if "fields" in request.POST.get():
-                fields = request.POST.get("fields")
+            if "output" in request.POST:
+                my_output = request.POST.get("output")
+                return render(request, 'query.html', {'form': form, 'step_2': True, 'output_set': True, 'current_output': current_output, 
+                                                        'current_filter': current_filter, 'query_api': query_api})
+            if "filter" in request.POST:
+                my_filter = request.POST.get("filter")
+                return render(request, 'query.html', {'form': form, 'step_2': True, 'filter_set': True, 'current_output': current_output, 
+                                                        'current_filter': current_filter, 'query_api': query_api})
 
-            query_string = "%s %s : %s %s" % (outputs, char, courses, fields)
-            req_data = json.dumps({'query': query_string})
-            ##-send GET to db
-            response = requests.get('http://n64storageflask-env.elasticbeanstalk.com/query',
-                    data=req_data, headers={'Content-Type': 'application/json'})
-            ##-extract table from result
-            query_result = response.json()
-            return render(request, 'query.html', {'form': form, 'query_api': query_api, 'result_table': query_result, 'test': True})
+            if "submit_query" in request.POST:
+                query_string = "%s : %s" % (outputs, char, courses, fields)
+                req_data = json.dumps({'query': query_string})
+                ##-send GET to db
+                response = requests.get('http://n64storageflask-env.elasticbeanstalk.com/query',
+                        data=req_data, headers={'Content-Type': 'application/json'})
+                ##-extract table from result
+                query_result = response.json()
+                return render(request, 'query.html', {'form': form, 'step_1': True, 'query_api': query_api, 'current_output': current_output, 'current_filter': current_filter, 
+                                                        'result_table': query_result})
 
     else:
         form = TextQueryForm()
-    return render(request, 'query.html', {'form': form, 'query_api': query_api})
+    return render(request, 'query.html', {'form': form, 'step_1': True, 'query_api': query_api, 'current_output': current_output, 'current_filter': current_filter})
 
 def watch(request):
+    if not request.user.is_authenticated():
+        return redirect('home')
+
     form = WatchForm()
     ##ask what videos we have access to
-    user = 'mgabed'
+    user = user.username
     response = requests.get("http://n64storageflask-env.elasticbeanstalk.com/users/%s/races" % user) 
     race_list = response.json()
     race_urls = []
@@ -112,9 +139,12 @@ def watch(request):
     return render(request, 'watch.html', {'form': form, 'video_list': race_list})
 
 def upload(request):
+    if not request.user.is_authenticated():
+        return redirect('home')
+
     if request.method == 'POST':
         url = request.POST.get('video_url')
-        session_data = json.dumps({'video_url': url})
+        session_data = json.dumps({'video_url': url, 'user': user.username})
         requests.post('http://n64storageflask-env.elasticbeanstalk.com/sessions',
                 data=session_data, headers={'Content-Type': 'application/json'})
         return redirect('upload')
