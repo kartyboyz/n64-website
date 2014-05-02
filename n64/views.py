@@ -117,7 +117,7 @@ def watch(request):
 
     form = WatchForm()
     ##ask what videos we have access to
-    user = user.username
+    user = request.user.username
     response = requests.get("http://n64storageflask-env.elasticbeanstalk.com/users/%s/races" % user) 
     race_list = response.json()
     race_urls = []
