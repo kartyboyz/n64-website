@@ -183,7 +183,7 @@ def races(request, session_id):
     user = request.user.username
     response = requests.get("http://n64storageflask-env.elasticbeanstalk.com/sessions/%s" % session_id) 
     sess = response.json()
-    if sess['owner'] != user:
+    if not 'owner' in sess or sess['owner'] != user:
         return redirect('sessions')
     response = requests.get("http://n64storageflask-env.elasticbeanstalk.com/sessions/%s/races" % session_id) 
     races = response.json()

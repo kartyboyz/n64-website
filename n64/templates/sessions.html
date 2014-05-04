@@ -18,10 +18,11 @@
         <td>{{ forloop.counter }}</td>
         <td>{{ s.date }}</td>
         {% if s.video_split %}
-        <td><a href="/races/{{ s.id }}"><button class="btn btn-default">View</button></a></td>
+        <td><a href="/races/{{ s.id }}?video_id=1"><button class="btn btn-default">View</button></a></td>
         {% else %}
         <td><button class="btn btn-default" disabled>View</button></td>
         {% endif %}
+    </tr>
 {% endfor %}
 </tbody></table>
 
