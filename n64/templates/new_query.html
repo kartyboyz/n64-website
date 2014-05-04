@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block css %}
+    {% include "include/stylesheets.html" %}
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}/css/datatables.css">
+{% endblock %}
+
+{% block sidebar %}{% endblock %}
+
+{% block main %}
+<div class="col-md-12">
+    <h1>Database Query Form</h1>
+
+    <div class="container">
+        <div class="form-group">
+            <!--<fieldset id="queryFields" disabled>-->
+            <fieldset id="queryFields">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <label for="outputField">Outputs</label>
+                        <input class="form-control input-lg" id="outputField" placeholder="count Item" />
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <label for="filterField">Filters</label>
+                        <input class="form-control input-lg" id="filterField" placeholder="by Item place">
+                    </div>
+                </div>
+            </fieldset>
+            <!--<div class="checkbox"><label><input id="advanced" type="checkbox">Advanced</label></div>-->
+        </div>
+        <button id="runQueryButton" type="button" class="btn btn-default">Submit</button>
+    </div>
+
+    <div id="results-container" class="container hidden">
+        <h2>Results</h2>
+        <div id="results"></div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+    {% include "include/scripts.html" %}
+    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}/js/datatables.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}/js/query.js"></script>
+{% endblock %}
+

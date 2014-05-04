@@ -10,7 +10,7 @@ from django.contrib.auth.views import login, logout
 urlpatterns = patterns('n64.views',
               url(r'^$', 'home', name='home'),
               url(r'^home/$', 'home', name='home'),
-			  url(r'^query/$', 'query', name='query'),
+			  url(r'^query/$', 'new_query', name='new_query'),
 			  url(r'^watch/$', 'watch', name='watch'),
 			  url(r'^upload/$', 'upload', name='upload'),
 			  url(r'^sign_s3/$', 'sign_request', name='sign_request'),

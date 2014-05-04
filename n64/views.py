@@ -202,6 +202,25 @@ def races(request, session_id):
     return render(request, 'races.html', {'session':sess, 'race':race,
         'initial_race':initial_race, 'races':races, 'tags':tags})
 
+
+def new_query(request):
+    if not request.user.is_authenticated():
+        return redirect('home')
+    return render(request, 'new_query.html')
+    #user = request.user.username
+    #if request.method == 'POST':
+        #form = TextQueryForm(request.POST)
+        #if form.is_valid():
+            #cd = form.cleaned_data
+            #query_string = "%s : %s" % (cd['Output_text'], cd['Filter_text'])
+            #req_data = json.dumps({'query': query_string})
+            #response = requests.get('http://n64storageflask-env.elasticbeanstalk.com/query',
+                    #data=req_data, headers={'Content-Type': 'application/json'})
+            ###-extract table from result
+            #query_result = response.json()
+            #return render(request, 'new_query.html', {'user':user, 'response': response})
+
+
 def sessions(request):
     if not request.user.is_authenticated():
         return redirect('home')
