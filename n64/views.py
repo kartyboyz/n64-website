@@ -7,6 +7,8 @@ import base64, json, urllib, hmac, time, hashlib
 import uuid, os, datetime
 import requests
 
+import time
+
 from n64.forms import BoxQueryForm, TextQueryForm, WatchForm 
 
 def home(request):
@@ -144,9 +146,9 @@ def upload(request):
 
     if request.method == 'POST':
         url = request.POST.get('video_url')
-        session_data = json.dumps({'video_url': url, 'user': request.user.username})
-        requests.post('http://n64storageflask-env.elasticbeanstalk.com/sessions',
-                data=session_data, headers={'Content-Type': 'application/json'})
+        session_data = json.dumps({'video_url': url, 'owner': request.user.username})
+        #requests.post('http://n64storageflask-env.elasticbeanstalk.com/sessions',
+                #data=session_data, headers={'Content-Type': 'application/json'})
         return redirect('upload')
 
     return render(request, 'upload.html')
@@ -173,3 +175,39 @@ def sign_request(request):
         'url': url
     })
     return HttpResponse(resp, content_type='text/plain; charset=x-user-defined')
+
+def races(request, session_id):
+    if not request.user.is_authenticated():
+        return redirect('home')
+
+    user = request.user.username
+    response = requests.get("http://n64storageflask-env.elasticbeanstalk.com/sessions/%s" % session_id) 
+    sess = response.json()
+    if sess['owner'] != user:
+        return redirect('sessions')
+    response = requests.get("http://n64storageflask-env.elasticbeanstalk.com/sessions/%s/races" % session_id) 
+    races = response.json()
+    initial_race = request.GET.get('video_id', None)
+    initial_race = int(initial_race) if initial_race is not None else None
+    race = races[initial_race-1] if initial_race is not None else None
+    tags = None
+    if race is not None:
+        race_id = races[initial_race-1]['id']
+        race['minutes'] = race['duration'] // 60
+        race['seconds'] = int(race['duration']) % 60
+
+        response = requests.get("http://n64storageflask-env.elasticbeanstalk.com/tags/%s/%d" % (user, race_id)) 
+        tags = response.json()
+
+    return render(request, 'races.html', {'session':sess, 'race':race,
+        'initial_race':initial_race, 'races':races, 'tags':tags})
+
+def sessions(request):
+    if not request.user.is_authenticated():
+        return redirect('home')
+    user = request.user.username
+    response = requests.get("http://n64storageflask-env.elasticbeanstalk.com/users/%s/sessions" % user) 
+    user_sessions = response.json()
+    for s in user_sessions: s['f_date'] = time.strptime(s['date'], '%a, %d %b %Y %H:%M:%S -0000')
+    return render(request, 'sessions.html', {'sessions':user_sessions})
+

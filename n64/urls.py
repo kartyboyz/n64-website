@@ -17,6 +17,8 @@ urlpatterns = patterns('n64.views',
 			  url(r'^login/$', 'login', name='login'),
 			  url(r'^logout/$', 'logout', name='logout'),
 			  url(r'^create_user/$', 'create_user', name='create_user'),
+              url(r'^sessions/$', 'sessions', name='sessions'),
+              url(r'^races/(?P<session_id>\d+)$', 'races', name='races'),
 )
 
     # Uncomment the admin/doc line below to enable admin documentation:

@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block css %}
+    {% include "include/stylesheets.html" %}
+    <link href="//vjs.zencdn.net/4.5/video-js.css" rel="stylesheet">
+    <style>
+.panel-group .list-group {
+    margin-bottom: 0;
+}
+
+.panel-group .list-group .list-group-item {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+}
+
+.panel-group .list-group .list-group-item:last-child {
+    border-bottom: none;
+}
+    </style>
+{% endblock %}
+
+{% block title %}Viewing Session {{ session.id }}{% endblock %}
+
+{%block sidebar %}
+<div class="col-md-3">
+    <!--<h1>Session {{ session.id }}</h1>-->
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <a data-toggle="collapse" data-parent="#accordion" href="#race-list">
+                    <h2 class="panel-title"><span class="fa fa-film"></span> Races</h2></a>
+            </div>
+            <!--<div class="panel-body"></div>-->
+            {% if race %}
+            <div id="race-list" class="panel-collapse collapse">
+            {% else %}
+            <div id="race-list" class="panel-collapse collapse in">
+            {% endif %}
+                <div class="list-group">
+                    {% for r in races %}
+                    {% ifequal r.race_number initial_race %}
+                    <a href="?video_id={{ r.race_number }}" class="list-group-item active">{{ r.race_number }} &mdash; {{ r.course }}</a>
+                    {% else %}
+                    <a href="?video_id={{ r.race_number }}" class="list-group-item">{{ r.race_number }} &mdash; {{ r.course }}</a>
+                    {% endifequal %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% if race %}
+        <div class="panel panel-default">
+            <div class="panel-heading"><a data-toggle="collapse" data-parent="#accordion" href="#race-stats">
+                    <h2 class="panel-title"><span class="fa fa-list"></span> Race Stats</h2>
+            </a></div>
+            <!--<div class="panel-body"></div>-->
+            {% if race %}
+            <div id="race-stats" class="panel-collapse collapse in">
+            {% else %}
+            <div id="race-stats" class="panel-collapse collapse">
+            {% endif %}
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Map:</strong> {{ race.course }}
+                    <li class="list-group-item"><strong>Time:</strong> {{ race.minutes }}:{{race.seconds|stringformat:"02d"}}
+                    {% for p in race.characters %}
+                    <li class="list-group-item"><strong>Player {{forloop.counter}}:</strong> {{p}}
+                    {% endfor %}
+                    {% if race.processed %}          
+                    <li class="list-group-item"><strong>Processed</strong>
+                    {% else %}                        
+                    <li class="list-group-item list-group-item-warning"><strong>Not Processed</strong>
+                    {% endif %}                        
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+        {% if tags %}
+        <div class="panel panel-default">
+            <div class="panel-heading"><a data-toggle="collapse" data-parent="#accordion" href="#race-tags">
+                    <h2 class="panel-title"><span class="fa fa-tags"></span> Tags</h2>
+            </a></div>
+            <div id="race-tags" class="panel-collapse collapse">
+                <div class="list-group">
+                    {% for tag in tags %}
+                    {% if tag.event_subtype == "Tag" %}
+                    <a data-type="Tag" data-time="{{ tag.timestamp }}" href="#" class="list-group-item tag-link"><span class="fa fa-tag"></span> Tag at {{ tag.timestamp }}</a>
+                    {% elif tag.event_subtype == "Watch" %}
+                    <a data-type="Watch" data-time="{{ tag.timestamp }}" href="#" class="list-group-item tag-link"><span class="fa fa-eye"></span> Watch at {{ tag.timestamp }}</a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block main %}
+<div class="col-md-9">
+<!--<h1>Session {{ session.id }}</h1>-->                                    
+{% if initial_race %}
+
+<video id="race-video" class="video-js vjs-default-skin"
+    controls preload="auto" width=640 height=480 data-setup='{"example":true}'>
+    <source src="{{ race.video_processed_url }}" type="video/mp4" />
+</video>
+
+{% endif %}
+</div>
+
+{% endblock %}
+
+{% block js %}
+    {% include "include/scripts.html" %}
+    <script src="//vjs.zencdn.net/4.5/video.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.tag-link').click(function(){
+                var time = parseInt($(this).attr('data-time'), 10);
+                var type = $(this).attr('data-type');
+                if (type == "Tag") {
+                    time -= 5;
+                }
+                videojs("#race-video").currentTime(time);
+                videojs("#race-video").play();
+                videojs("#race-video").currentTime(time);
+            });
+        });
+    </script>
+{% endblock %}
