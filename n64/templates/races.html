@@ -59,15 +59,15 @@
             <div id="race-stats" class="panel-collapse collapse">
             {% endif %}
                 <ul class="list-group">
-                    <li class="list-group-item"><strong>Map:</strong> {{ race.course }}
-                    <li class="list-group-item"><strong>Time:</strong> {{ race.minutes }}:{{race.seconds|stringformat:"02d"}}
+                    <li class="list-group-item"><span class="fa fa-map-marker"></span> <strong>Map:</strong> {{ race.course }}
+                    <li class="list-group-item"><span class="fa fa-clock-o"></span> <strong>Time:</strong> {{ race.minutes }}:{{race.seconds|stringformat:"02d"}}
                     {% for p in race.characters %}
-                    <li class="list-group-item"><strong>Player {{forloop.counter}}:</strong> {{p}}
+                    <li class="list-group-item"><span class="fa fa-user"></span> <strong>Player {{forloop.counter}}:</strong> {{p}}
                     {% endfor %}
                     {% if race.processed %}          
-                    <li class="list-group-item"><strong>Processed</strong>
+                    <li class="list-group-item"><span class="fa fa-check"></span> <strong>Processed</strong>
                     {% else %}                        
-                    <li class="list-group-item list-group-item-warning"><strong>Not Processed</strong>
+                    <li class="list-group-item list-group-item-warning"><span class="fa fa-times"></span> <strong>Not Processed</strong>
                     {% endif %}                        
                 </ul>
             </div>
