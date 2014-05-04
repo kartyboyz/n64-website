@@ -78,18 +78,23 @@
             </div>
         </div>
         {% endif %}
-        {% if tags %}
+        {% if race %}
         <div class="panel panel-default">
             <div class="panel-heading"><a data-toggle="collapse" data-parent="#accordion" href="#race-tags">
                     <h2 class="panel-title"><span class="fa fa-tags"></span> Tags</h2>
             </a></div>
             <div id="race-tags" class="panel-collapse collapse">
-                <div class="list-group">
+                <div class="panel-body">
+                    <button class="btn btn-default btn-block" id="add-tag">Add a Tag</button>
+                </div>
+                <div class="list-group" id="tag-list">
                     {% for tag in tags %}
                     {% if tag.event_subtype == "Tag" %}
                     <a data-type="Tag" data-time="{{ tag.timestamp }}" href="#" class="list-group-item tag-link"><span class="fa fa-tag"></span> Tag at {{ tag.timestamp }}</a>
                     {% elif tag.event_subtype == "Watch" %}
                     <a data-type="Watch" data-time="{{ tag.timestamp }}" href="#" class="list-group-item tag-link"><span class="fa fa-eye"></span> Watch at {{ tag.timestamp }}</a>
+                    {% elif tag.event_subtype == "User" %}
+                    <a data-type="User" data-time="{{ tag.timestamp }}" href="#" class="list-group-item tag-link"><span class="fa fa-thumb-tack"></span> Custom at {{ tag.timestamp }}</a>
                     {% endif %}
                     {% endfor %}
                 </div>
@@ -119,18 +124,56 @@
 {% block js %}
     {% include "include/scripts.html" %}
     <script src="//vjs.zencdn.net/4.5/video.js"></script>
+    <script src="{{STATIC_URL}}/js/jquery.cookie.js" /></script>
     <script>
         $(document).ready(function(){
-            $('.tag-link').click(function(){
+            var csrftoken = $.cookie('csrftoken');
+
+            var csrfSafeMethod =  function(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            };
+            $.ajaxSetup({
+                crossDomain: false, // obviates need for sameOrigin test
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type)) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+
+            var clickfn = function() {
                 var time = parseInt($(this).attr('data-time'), 10);
                 var type = $(this).attr('data-type');
                 if (type == "Tag") {
                     time -= 5;
+                } else if (type == "User") {
+                    time -= 2;
                 }
                 videojs("#race-video").currentTime(time);
                 videojs("#race-video").play();
                 videojs("#race-video").currentTime(time);
-            });
+            };
+
+            $('.tag-link').click(clickfn);
+
+            $('#add-tag').click(function() {
+                var time = videojs("#race-video").currentTime();
+                $('#add-tag').attr('disabled', 'disasbled');
+                $.post("/create_tag/{{ race.id }}/" + time, function(data) {
+                    var a = document.createElement('a');
+                    $(a).attr('data-type', 'User');
+                    $(a).attr('data-time', time.toFixed(1));
+                    $(a).addClass('list-group-item');
+                    $(a).html("<span class='fa fa-thumb-tack'></span> Custom at " + time.toFixed(1));
+                    $(a).click(clickfn);
+                    $('#tag-list').append(a);
+
+                    setTimeout(function() {
+                        $('#add-tag').removeAttr('disabled');
+                    }, 1000*10);
+                });
+            })
         });
     </script>
 {% endblock %}

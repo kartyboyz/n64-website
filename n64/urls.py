@@ -19,6 +19,7 @@ urlpatterns = patterns('n64.views',
 			  url(r'^create_user/$', 'create_user', name='create_user'),
               url(r'^sessions/$', 'sessions', name='sessions'),
               url(r'^races/(?P<session_id>\d+)$', 'races', name='races'),
+              url(r'^create_tag/(?P<race_id>\d+)/(?P<timestamp>\d+\.?\d*)$', 'create_tag', name='create_tag'),
 )
 
     # Uncomment the admin/doc line below to enable admin documentation:

@@ -230,3 +230,28 @@ def sessions(request):
     for s in user_sessions: s['f_date'] = time.strptime(s['date'], '%a, %d %b %Y %H:%M:%S -0000')
     return render(request, 'sessions.html', {'sessions':user_sessions})
 
+
+def create_tag(request, race_id, timestamp):
+    if not request.user.is_authenticated():
+        return HttpResponse(401, "Unauthorized")
+    
+    if request.method != "POST":
+        return HttpResponse(405, "Method not Allowed")
+
+    try:
+        time = float(timestamp)
+    except ValueError:
+        return HttpResponse(400, "Invalid Request")
+    tag = json.dumps({
+        'event_type':'Tag',
+        'event_subtype': 'User',
+        'event_info': 'User',
+        'timestamp': time,
+    })
+    response = requests.post("http://n64storageflask-env.elasticbeanstalk.com/races/%s/events" % race_id,
+            data=tag, headers={'Content-Type':'application/json'}) 
+    if response.ok:           
+        return HttpResponse(200, "Tag created successfully")
+    else:
+        return HttpResponse(response.status_code, "There was a problem")
+
