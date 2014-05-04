@@ -20,6 +20,7 @@ urlpatterns = patterns('n64.views',
               url(r'^sessions/$', 'sessions', name='sessions'),
               url(r'^races/(?P<session_id>\d+)$', 'races', name='races'),
               url(r'^create_tag/(?P<race_id>\d+)/(?P<timestamp>\d+\.?\d*)$', 'create_tag', name='create_tag'),
+              url(r'^delete_tag/(?P<event_id>\d+)$', 'delete_tag', name='delete_tag'),
 )
 
     # Uncomment the admin/doc line below to enable admin documentation:

@@ -16,6 +16,10 @@
 .panel-group .list-group .list-group-item:last-child {
     border-bottom: none;
 }
+
+.list-group-item a{
+    color: #555;
+}
     </style>
 {% endblock %}
 
@@ -94,7 +98,7 @@
                     {% elif tag.event_subtype == "Watch" %}
                     <a data-type="Watch" data-time="{{ tag.timestamp }}" href="#" class="list-group-item tag-link"><span class="fa fa-eye"></span> Watch at {{ tag.timestamp }}</a>
                     {% elif tag.event_subtype == "User" %}
-                    <a data-type="User" data-time="{{ tag.timestamp }}" href="#" class="list-group-item tag-link"><span class="fa fa-thumb-tack"></span> Custom at {{ tag.timestamp }}</a>
+                    <li class="list-group-item"><a data-type="User" data-time="{{ tag.timestamp }}" href="#" class="tag-link"><span class="fa fa-thumb-tack"></span> Custom at {{ tag.timestamp }}</a><a class="close tag-delete" data-id="{{ tag.id }}">&times;</a></li>
                     {% endif %}
                     {% endfor %}
                 </div>
@@ -156,6 +160,14 @@
             };
 
             $('.tag-link').click(clickfn);
+
+            $('.tag-delete').click(function() {
+                var ev_id = $(this).attr('data-id');
+                var that = this;
+                $.post("/delete_tag/" + ev_id, function(data) {
+                    $(that).parent().remove();
+                });
+            });
 
             $('#add-tag').click(function() {
                 var time = videojs("#race-video").currentTime();

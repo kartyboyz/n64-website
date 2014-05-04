@@ -255,3 +255,18 @@ def create_tag(request, race_id, timestamp):
     else:
         return HttpResponse(response.status_code, "There was a problem")
 
+
+def delete_tag(request, event_id):
+    if not request.user.is_authenticated():
+        return HttpResponse(401, "Unauthorized")
+
+    if request.method != "POST":
+        return HttpResponse(405, "Method not Allowed")
+
+    response = requests.delete("http://n64storageflask-env.elasticbeanstalk.com/events/%s" % event_id) 
+
+    if response.ok:           
+        return HttpResponse(200, "Tag created successfully")
+    else:
+        return HttpResponse(response.status_code, "There was a problem")
+
