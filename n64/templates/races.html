@@ -97,6 +97,8 @@
                     <a data-type="Tag" data-time="{{ tag.timestamp }}" href="#" class="list-group-item tag-link"><span class="fa fa-tag"></span> Tag at {{ tag.timestamp }}</a>
                     {% elif tag.event_subtype == "Watch" %}
                     <a data-type="Watch" data-time="{{ tag.timestamp }}" href="#" class="list-group-item tag-link"><span class="fa fa-eye"></span> Watch at {{ tag.timestamp }}</a>
+                    {% elif tag.event_subtype == "Loud" %}
+                    <a data-type="Loud" data-time="{{ tag.timestamp }}" href="#" class="list-group-item tag-link"><span class="fa fa-bolt"></span> Excitement at {{ tag.timestamp }}</a>
                     {% elif tag.event_subtype == "User" %}
                     <li class="list-group-item"><a data-type="User" data-time="{{ tag.timestamp }}" href="#" class="tag-link"><span class="fa fa-thumb-tack"></span> Custom at {{ tag.timestamp }}</a><a class="close tag-delete" data-id="{{ tag.id }}">&times;</a></li>
                     {% endif %}
