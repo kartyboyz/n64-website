@@ -150,37 +150,51 @@
                 var time = parseInt($(this).attr('data-time'), 10);
                 var type = $(this).attr('data-type');
                 if (type == "Tag") {
-                    time -= 5;
+                    time -= 3;
                 } else if (type == "User") {
-                    time -= 2;
+                    time -= 1;
                 }
                 videojs("#race-video").currentTime(time);
                 videojs("#race-video").play();
                 videojs("#race-video").currentTime(time);
             };
 
-            $('.tag-link').click(clickfn);
-
-            $('.tag-delete').click(function() {
+            var deletefn = function() {
                 var ev_id = $(this).attr('data-id');
                 var that = this;
                 $.post("/delete_tag/" + ev_id, function(data) {
                     $(that).parent().remove();
                 });
-            });
+            };
+
+            $('.tag-link').click(clickfn);
+
+            $('.tag-delete').click(deletefn);
 
             $('#add-tag').click(function() {
                 var time = videojs("#race-video").currentTime();
                 $('#add-tag').attr('disabled', 'disasbled');
                 $.post("/create_tag/{{ race.id }}/" + time, function(data) {
+                    var id = data.id;
+                    var li = document.createElement('li');
+                    $(li).addClass('list-group-item');
+
                     var a = document.createElement('a');
                     $(a).attr('data-type', 'User');
                     $(a).attr('data-time', time.toFixed(1));
-                    $(a).addClass('list-group-item');
                     $(a).html("<span class='fa fa-thumb-tack'></span> Custom at " + time.toFixed(1));
                     $(a).click(clickfn);
-                    $('#tag-list').append(a);
 
+                    var del = document.createElement('a');
+                    $(del).html('&times;');
+                    $(del).addClass("close tag-delete");
+                    $(del).attr('data-id', id);
+                    $(del).click(deletefn);
+
+                    $(li).append(a);
+                    $(li).append(del);
+
+                    $('#tag-list').append(li);
                     setTimeout(function() {
                         $('#add-tag').removeAttr('disabled');
                     }, 1000*10);

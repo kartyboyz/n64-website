@@ -250,10 +250,11 @@ def create_tag(request, race_id, timestamp):
     })
     response = requests.post("http://n64storageflask-env.elasticbeanstalk.com/races/%s/events" % race_id,
             data=tag, headers={'Content-Type':'application/json'}) 
+    val = response.json()
     if response.ok:           
-        return HttpResponse(200, "Tag created successfully")
+        return HttpResponse(status=200, content=json.dumps({'id': val['id']}), content_type='application/json')
     else:
-        return HttpResponse(response.status_code, "There was a problem")
+        return HttpResponse(status=response.status_code, content="{}", content_type='application/json')
 
 
 def delete_tag(request, event_id):
