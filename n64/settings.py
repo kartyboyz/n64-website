@@ -1,4 +1,5 @@
 # Django settings for n64 project.
+import os
 import os.path
 
 DEBUG = True
@@ -17,7 +18,7 @@ DATABASES = {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'n64data',
             'USER': 'kartyboyz',
-            'PASSWORD': 'kartzarecool',
+            'PASSWORD': os.getenv('DBPASS', ''),
             'HOST': 'n64-database.cjkhmjv2ca1f.us-east-1.rds.amazonaws.com',
             'PORT': 5432,
         }
